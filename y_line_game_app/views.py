@@ -24,3 +24,21 @@ def home(request):
         'favorite_fruits': favorite_fruits,
         'my_info': my_info
     })
+
+
+def filter_test(request):
+    name = 'ichiro yamada'
+    height = 175
+    weight = 60
+    bmi = weight / (height / 100)**2
+    page_url = 'ホームページ: https://www.google.co.jp/'
+    favorite_fruits = ['A', 'B', 'C']
+    msg2 = 1234567890
+
+    return render(request, 'filter_test.html', context={
+        'name': name,
+        'bmi': bmi,
+        'page_url': page_url,
+        'fruits': favorite_fruits,
+        'msg2': msg2
+    })
