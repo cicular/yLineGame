@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'home.css' %}">
 </head>
 <body>
 <h1>{{ name | upper }}</h1>
@@ -13,5 +15,6 @@
 <h1>{{msg2 | truncatechars:7}}</h1>
 
 <a href="{% url 'y_line_game_app:home' first_name='saburo' last_name='konishi' %}">home</a>
+<img src="{% static 'sample.jpg' %}">
 </body>
 </html>
