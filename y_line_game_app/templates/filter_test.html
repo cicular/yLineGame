@@ -11,5 +11,7 @@
 <h1>給料：{{ salary | default:'秘密'}}</h1>
 <h1>{{ fruits | random}}</h1>
 <h1>{{msg2 | truncatechars:7}}</h1>
+
+<a href="{% url 'y_line_game_app:home' first_name='saburo' last_name='konishi' %}">home</a>
 </body>
 </html>
