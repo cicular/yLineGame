@@ -5,8 +5,14 @@
     <title>HOME<</title>
 </head>
 <body>
-<h1>Name:{{ my_name }}</h1>
-<h2>果物:{{favorite_fruits.2}}</h2>
-<h3>年齢:{{my_info.age}}</h3>
+<!--コメントアウト {# #}-->
+{# <h1>Name:{{ my_name }}</h1> #}
+{#<h2>果物:{{favorite_fruits.2}}</h2> #}
+{#<h3>年齢:{{my_info.age}}</h3> #}
+<ul>
+    {% for fruits in favorite_fruits %}
+    <li>{{fruits}}</li>
+    {% endfor %}
+</ul>
 </body>
 </html>
