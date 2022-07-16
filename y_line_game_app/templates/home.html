@@ -14,5 +14,14 @@
     <li>{{fruits}}</li>
     {% endfor %}
 </ul>
+
+{# if #}
+{% if 'C' in  favorite_fruits %}
+    <p>Cがあります。</p>
+{% endif %}
+
+{% if my_info.age == 25 %}
+    <p>25歳でした。</p>
+{% endif %}
 </body>
 </html>
