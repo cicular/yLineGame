@@ -8,4 +8,5 @@ from django.http import HttpResponse
 #     return HttpResponse('<h1>hello</h1>')
 
 def index(request):
-    return render(request, 'index.html')
+    val = 'Hello World!!'
+    return render(request, 'index.html', context={'value': val})
