@@ -50,14 +50,25 @@ def index2(request):
     return render(request, 'index2.html')
 
 
-def register_theme(request):
-    form = forms.ThemeInfo()
+# def register_theme(request):
+#     form = forms.ThemeInfo()
+#     if request.method == 'POST':
+#         # Formで送られた値を取り出す
+#         form = forms.ThemeInfo(request.POST)
+#         if form.is_valid():
+#             print('バリデーション成功')
+#             print(f'title: {form.cleaned_data["theme_title"]}, contents: {form.cleaned_data["theme_contents"]}')
+#     return render(request, 'register_theme.html', context={
+#         'form': form
+#     })
+
+
+def form_theme(request):
+    form = forms.ThemeModelForm()
     if request.method == 'POST':
-        # Formで送られた値を取り出す
-        form = forms.ThemeInfo(request.POST)
+        form = forms.ThemeModelForm(request.POST)
         if form.is_valid():
-            print('バリデーション成功')
-            print(f'title: {form.cleaned_data["theme_title"]}, contents: {form.cleaned_data["theme_contents"]}')
+            form.save()
     return render(request, 'register_theme.html', context={
         'form': form
     })
