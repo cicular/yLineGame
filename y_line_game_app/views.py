@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from . import forms
 
 # Create your views here.
 
@@ -41,4 +42,16 @@ def filter_test(request):
         'page_url': page_url,
         'fruits': favorite_fruits,
         'msg2': msg2
+    })
+
+
+# お題の登録
+def index2(request):
+    return render(request, 'index2.html')
+
+
+def register_theme(request):
+    form = forms.ThemeInfo()
+    return render(request, 'register_theme.html', context={
+        'form': form
     })
