@@ -22,3 +22,21 @@ class ThemeModelForm(forms.ModelForm):
         # 画面上にどのフィールドを表示するか
         # fields = '__all__'
         fields = ['theme_title', 'theme_contents']
+
+    # オーバーライド
+    def save(self, *args, **kwargs):
+        print('オーバーライドしたsave')
+        # commit=Falseとすることでこの段階では保存されない。
+        obj = super(ThemeModelForm, self).save(commit=False)
+        obj.user_id = 1
+        obj.num_of_plays = 0
+        obj.num_of_contents = 1
+        obj.best_record = 0
+        obj.public_flg = '0'
+        obj.delete_flg = '0'
+
+        print('save実行')
+        print(obj.user_id)
+
+        obj.save()
+        return obj
