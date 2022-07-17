@@ -10,7 +10,13 @@ from .models import Theme
 #                                      )
 
 
-class ThemeModelForm(forms.ModelForm):
+class BaseForm(forms.ModelForm):
+    def save(self, *args, **kwargs):
+        print(f'Form: {self.__class__.__name__}実行')
+        return super(BaseForm, self).save(*args, **kwargs)
+
+
+class ThemeModelForm(BaseForm):
     theme_title = forms.CharField(label='お題のタイトル', max_length=40)
     theme_contents = forms.CharField(label='お題の内容',
                                      max_length=30000,
