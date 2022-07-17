@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>お題登録</title>
+</head>
+<body>
+    <header>山手線ゲーム</header>
+    
+    <h1>お題登録</h1>
+
+    <div class="input_area">
+    <form>
+        <div>
+        <label>お題のタイトル</label>
+        <input type="text" placeholder="山手線の駅">
+        </div>
+
+        <div>
+        <label>お題の内容</label>
+        <textarea rows="20" cols="40" placeholder="東京,有楽町,新橋,浜松町,田町,品川,大崎,五反田,目黒,恵比寿,渋谷,原宿"></textarea>
+        </div>
+
+        <input type="submit" value="登録">
+    </form>
+    </div>
+    <a href="{% url 'y_line_game_app:form_page' %}">リンク</a>
+</body>
+</html>
