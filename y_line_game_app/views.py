@@ -52,6 +52,12 @@ def index2(request):
 
 def register_theme(request):
     form = forms.ThemeInfo()
+    if request.method == 'POST':
+        # Formで送られた値を取り出す
+        form = forms.ThemeInfo(request.POST)
+        if form.is_valid():
+            print('バリデーション成功')
+            print(f'title: {form.cleaned_data["theme_title"]}, contents: {form.cleaned_data["theme_contents"]}')
     return render(request, 'register_theme.html', context={
         'form': form
     })
