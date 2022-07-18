@@ -1,9 +1,12 @@
+import Header from "./header";
+
 import './App.css';
 import './style.css';
 
 const Play = () => {
     return (
       <div className="App">
+      <Header />
         <h1>プレイ</h1>
 
         <div>

@@ -1,6 +1,9 @@
+import Header from "./header";
+
 const Register = () => {
     return (
       <div className="App">
+      <Header />
       <h1>お題登録</h1>
       <div className="input_area">
         <form method="POST">
