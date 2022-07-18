@@ -1,7 +1,7 @@
 const Header = () => {
     return (
       <div className="App">
-      <h1>山手線ゲーム</h1>
+      <header>山手線ゲーム</header>
       </div>
     );
   }

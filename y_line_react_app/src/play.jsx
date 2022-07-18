@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 import Header from "./header";
 import Footer from "./footer";
 
@@ -7,9 +9,10 @@ import './style.css';
 const Play = () => {
     return (
       <div className="App">
-      <Header />
-        <h1>プレイ</h1>
-
+        <Header />
+        <Link to="/list" className='menu'>お題一覧</Link>
+        <Link to="/register" className='menu'>お題登録</Link>
+        <h3>プレイ</h3>
         <div>
             <input type="text" placeholder="神保町"/>
         </div>

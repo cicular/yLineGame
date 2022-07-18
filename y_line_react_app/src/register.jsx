@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 import Header from "./header";
 import Footer from "./footer";
 
@@ -5,7 +7,8 @@ const Register = () => {
     return (
       <div className="App">
       <Header />
-      <h1>お題登録</h1>
+      <Link to="/list">お題一覧</Link>
+      <h3>お題登録</h3>
       <div className="input_area">
         <form method="POST">
             <label>お題のタイトル</label>
