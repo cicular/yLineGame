@@ -1,4 +1,5 @@
 import Header from "./header";
+import Footer from "./footer";
 
 const Register = () => {
     return (
@@ -23,6 +24,7 @@ const Register = () => {
             </div>
         </form>      
       </div>
+      <Footer />
       </div>
     );
   }

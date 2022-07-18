@@ -20,3 +20,14 @@
     /* カーソルの形を変える */
     cursor :pointer
 }
+
+.copyright{
+    font-size: 8px;
+    /* [上][右][下][左] */
+    margin: 10px 0 0 0;
+}
+
+img{
+    width: 25px;
+    height: 13px;
+}

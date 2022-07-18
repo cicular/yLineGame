@@ -1,4 +1,5 @@
 import Header from "./header";
+import Footer from "./footer";
 
 import './App.css';
 import './style.css';
@@ -37,6 +38,7 @@ const Play = () => {
         <label>0</label>
         </div>
 
+        <Footer />
       </div>
     );
   }

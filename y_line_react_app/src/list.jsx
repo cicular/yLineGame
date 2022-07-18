@@ -1,4 +1,5 @@
 import Header from "./header";
+import Footer from "./footer";
 
 const List = () => {
     return (
@@ -15,6 +16,7 @@ const List = () => {
 
           </tbody>
         </table>
+        <Footer />
       </div>
     );
   }
