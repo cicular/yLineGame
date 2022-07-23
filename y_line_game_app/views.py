@@ -77,4 +77,5 @@ def form_theme(request):
 
 class ThemeViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = ThemeSerializer
-    queryset = Theme.objects.all()
+    # 警告が消えないが、動作はするので一旦放置とする。
+    # queryset = Theme.objects.all()
