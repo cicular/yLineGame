@@ -1,9 +1,12 @@
 from django.urls import path
 from . import views
-
+from rest_framework import routers
+from . import apis
 
 app_name = 'y_line_game_app'
 
+# router = routers.DefaultRouter()
+# router.register(r'theme', views.ThemeViewSet, "theme")
 
 urlpatterns = [
     # 127.0.0.1:8000/y_line_game_app/hello
@@ -15,4 +18,6 @@ urlpatterns = [
     # http://127.0.0.1:8000/y_line_game_app/form_theme
     path('form_theme', views.form_theme, name='form_theme'),
     path('index2', views.index2, name='index2'),
+    # path('theme', views.ThemeViewSet.as_view, name='theme')
+    path('theme', apis.Api.as_view(), name='theme')
 ]

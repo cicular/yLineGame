@@ -1,12 +1,13 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from . import forms
-
-# Create your views here.
-
+from rest_framework import viewsets
+from .serializers import ThemeSerializer
+from .models import Theme
 
 # def index(request):
 #     return HttpResponse('<h1>hello</h1>')
+
 
 def index(request):
     val = 'Hello World!!'
@@ -72,3 +73,8 @@ def form_theme(request):
     return render(request, 'register_theme.html', context={
         'form': form
     })
+
+
+class ThemeViewSet(viewsets.ReadOnlyModelViewSet):
+    serializer_class = ThemeSerializer
+    queryset = Theme.objects.all()
