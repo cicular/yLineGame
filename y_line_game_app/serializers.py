@@ -5,5 +5,8 @@ from .models import Theme
 class ThemeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Theme
-        fields = '__all__'
+        # fields = '__all__'
         # field = ["theme_id", "theme_title"]
+        fields = (
+            "theme_id", "theme_title"
+        )
