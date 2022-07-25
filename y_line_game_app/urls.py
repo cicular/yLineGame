@@ -18,6 +18,7 @@ urlpatterns = [
     # http://127.0.0.1:8000/y_line_game_app/form_theme
     path('form_theme', views.form_theme, name='form_theme'),
     path('index2', views.index2, name='index2'),
-    # path('theme', views.ThemeViewSet.as_view, name='theme')
-    path('theme', views.theme_list, name='theme')
+    # ()を書かないと、but 2 were givenエラーになる。
+    path('theme', views.ThemeViewSet.as_view(), name='theme')
+    # path('theme', views.theme_list, name='theme')
 ]

@@ -2,7 +2,8 @@ from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from . import forms
 from rest_framework import viewsets
-from .serializers import ThemeSerializer
+from rest_framework import views
+from .serializers import GetThemeSerializer, PostThemeSerializer
 from .models import Theme
 
 # def index(request):
@@ -76,14 +77,35 @@ def form_theme(request):
 
 
 def theme_list(request):
-    serializer_class = ThemeSerializer
+    serializer_class = GetThemeSerializer
     # 警告が消えないが、動作はするので一旦放置とする。
     queryset = Theme.objects.all()
-    serializer = ThemeSerializer(queryset, many=True)
+    serializer = GetThemeSerializer(queryset, many=True)
     return JsonResponse(serializer.data, safe=False)
 
 
-class ThemeViewSet(viewsets.ReadOnlyModelViewSet):
-    serializer_class = ThemeSerializer
-    # 警告が消えないが、動作はするので一旦放置とする。
-    # queryset = Theme.objects.all()
+# class ThemeViewSet(viewsets.ReadOnlyModelViewSet):
+#     serializer_class = ThemeSerializer
+#     # 警告が消えないが、動作はするので一旦放置とする。
+#     # queryset = Theme.objects.all()
+
+
+# https://www.ariseanalytics.com/activities/report/20210205/
+class ThemeViewSet(views.APIView):
+    def post(self, request, *args, **kwargs):
+        print("★★★★★★★★★★★★★★★★★★★★★★★★★★★★★")
+        print(request.data)
+        # シリアライザオブジュエクトを作成
+        serializer = PostThemeSerializer(data=request.data)
+        # バリデーション
+        serializer.is_valid(raise_exception=True)
+        # モデルオブジェクトを登録
+        serializer.save()
+        # レスポンスオブジェクトを返す
+        return JsonResponse(serializer.data)
+
+    def get(self, request):
+        # 警告が消えないが、動作はするので一旦放置とする。
+        queryset = Theme.objects.all()
+        serializer = GetThemeSerializer(queryset, many=True)
+        return JsonResponse(serializer.data, safe=False)
