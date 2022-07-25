@@ -28,13 +28,15 @@ import Footer from "./footer";
 let url = 'http://127.0.0.1:8000/y_line_game_app/theme'
 
 const Register = () => {
-  const [users, setUsers] = useState([]);
+  const [theme, setTheme] = useState([]);
+  const [themeTitle, setThemeTitle] = useState([]);
+  const [themeContents, setThemeContents] = useState([]);
 
-  const createNewUser = () => {
-    alert('aaaaa')
+  const createNewTheme = () => {
+    alert(themeTitle)
     axios.post(url, {
-      theme_title: '山手線77',
-      theme_contents: 'Flintstone',
+      theme_title: themeTitle,
+      theme_contents: themeContents,
       user_id: 1,
       num_of_plays: 0,
       num_of_contents: 0,
@@ -42,11 +44,19 @@ const Register = () => {
       delete_flg: '0',
     })
     .then(response => {
-      setUsers([...users, response.data])
+      setTheme([...theme, response.data])
     })
     .catch(error => {
       console.log(error);
     });
+  }
+
+  const handleChangeTitle = (e) => {
+    setThemeTitle(e.target.value)
+  }
+
+  const handleChangeContents = (e) => {
+    setThemeContents(e.target.value)
   }
 
   // function updatePost() {
@@ -69,17 +79,19 @@ const Register = () => {
         <form method="POST">
             <label>お題のタイトル</label>
             <div>
-            <input type="text" placeholder="山手線の駅" />
+            {/* onChangeを書かないと、入力することができない。 */}
+            <input type="text" placeholder="山手線の駅" value={themeTitle} onChange={handleChangeTitle}/>
             </div>
 
             <div>
             <label>お題の内容</label>
             </div>
 
-            <textarea rows="20" cols="40" placeholder="東京,有楽町,新橋,浜松町,田町,品川,大崎,五反田,目黒,恵比寿,渋谷,原宿,代々木,新宿,新大久保,高田馬場,目白,池袋,大塚,巣鴨,駒込,田端,西日暮里,日暮里,鶯谷,上野,御徒町,秋葉原,神田,高輪ゲートウェイ"></textarea>
+            {/* onChangeを書かないと、入力することができない。 */}
+            <textarea value={themeContents} onChange={handleChangeContents} rows="20" cols="40" placeholder="東京,有楽町,新橋,浜松町,田町,品川,大崎,五反田,目黒,恵比寿,渋谷,原宿,代々木,新宿,新大久保,高田馬場,目白,池袋,大塚,巣鴨,駒込,田端,西日暮里,日暮里,鶯谷,上野,御徒町,秋葉原,神田,高輪ゲートウェイ"></textarea>
             
             <div>
-              <input className='button' type="submit" value="登録" onClick={createNewUser}/>
+              <input className='button' type="submit" value="登録" onClick={createNewTheme}/>
             </div>
         </form>      
       </div>
