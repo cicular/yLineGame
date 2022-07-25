@@ -7,8 +7,8 @@ import Footer from "./footer";
 // import Register from './register';
 
 let themes;
-let url = 'https://jsonplaceholder.typicode.com/posts'
-    // 'http://127.0.0.1:8000/y_line_game_app/theme'
+// let url = 'https://jsonplaceholder.typicode.com/posts'
+let url = 'http://127.0.0.1:8000/y_line_game_app/theme'
 
 const List = () => {
   const [themes, setThemes] = useState([]);
@@ -18,7 +18,8 @@ const List = () => {
     axios.get(url).then((response) => {
       setThemes(response.data);
       // const themes = response.data;
-      console.log('saa')
+      console.log(response.data)
+      alert(response.data)
     });
   }, []);
 
@@ -61,7 +62,7 @@ const List = () => {
         <ul>
         {/* { themes } */}
         {/* { themes[0]} */}
-        { themes.map(theme => <li>{theme.title}</li>)}
+        { themes.map(theme => <li>{theme.theme_title}</li>)}
       </ul>
 
         <Footer />

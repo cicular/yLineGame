@@ -19,5 +19,5 @@ urlpatterns = [
     path('form_theme', views.form_theme, name='form_theme'),
     path('index2', views.index2, name='index2'),
     # path('theme', views.ThemeViewSet.as_view, name='theme')
-    path('theme', apis.Api.as_view(), name='theme')
+    path('theme', views.theme_list, name='theme')
 ]

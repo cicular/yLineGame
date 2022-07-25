@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from . import forms
 from rest_framework import viewsets
 from .serializers import ThemeSerializer
@@ -73,6 +73,14 @@ def form_theme(request):
     return render(request, 'register_theme.html', context={
         'form': form
     })
+
+
+def theme_list(request):
+    serializer_class = ThemeSerializer
+    # 警告が消えないが、動作はするので一旦放置とする。
+    queryset = Theme.objects.all()
+    serializer = ThemeSerializer(queryset, many=True)
+    return JsonResponse(serializer.data, safe=False)
 
 
 class ThemeViewSet(viewsets.ReadOnlyModelViewSet):
