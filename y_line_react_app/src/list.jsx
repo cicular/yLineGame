@@ -17,23 +17,9 @@ const List = () => {
   useEffect(() => {
     axios.get(url).then((response) => {
       setThemes(response.data);
-      // const themes = response.data;
       console.log(response.data)
-      alert(response.data)
     });
   }, []);
-
-    // これは表示できるけど、axios内だとundefinedになってしまう。
-    // const themes = "こんにちは"
-
-    // axios.get(url).then((response) => {
-    //   themes = response.data;
-    //   console.log(themes);
-    //   alert(themes)
-    //   });
-
-      // var data = JSON.parse(JSON.stringify(themes));
-      // console.log(data);
 
     // if (!themes) return null;
 
@@ -55,14 +41,12 @@ const List = () => {
         {/* <ul> */}
         {/* {res.data} */}
 
-        <div>
-        {/* { themes[0]} */}
-        </div>
-
         <ul>
-        {/* { themes } */}
+        {/* Unchecked runtime.lastError: The message port closed before a response was received.   */}
         {/* { themes[0]} */}
-        { themes.map(theme => <li>{theme.theme_title}</li>)}
+
+        {/* mapメソッドで展開する場合は、ユニークなkeyを設定する必要があるので注意してください。 */}
+        { themes.map(theme => <li key={theme.theme_id}> {theme.theme_title} </li>)}
       </ul>
 
         <Footer />
