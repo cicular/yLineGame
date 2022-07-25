@@ -91,9 +91,12 @@ const Register = () => {
             <textarea value={themeContents} onChange={handleChangeContents} rows="20" cols="40" placeholder="東京,有楽町,新橋,浜松町,田町,品川,大崎,五反田,目黒,恵比寿,渋谷,原宿,代々木,新宿,新大久保,高田馬場,目白,池袋,大塚,巣鴨,駒込,田端,西日暮里,日暮里,鶯谷,上野,御徒町,秋葉原,神田,高輪ゲートウェイ"></textarea>
             
             <div>
-              <input className='button' type="submit" value="登録" onClick={createNewTheme}/>
+              {/* <input className='button' type="submit" value="登録" onClick={createNewTheme}/> */}
+              <button>
+                <Link to="/list" onClick={createNewTheme}>登録</Link>
+              </button>
             </div>
-        </form>      
+        </form>
       </div>
       <Footer />
       </div>
