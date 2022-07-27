@@ -51,34 +51,34 @@ const Play = () => {
         <Link to="/list" className='menu'>お題一覧</Link>
         <Link to="/register" className='menu'>お題登録</Link>
         <h3>プレイ</h3>
-        <h3>{themeId}</h3>
-        <h3>{themeDetail.theme_title}</h3>
+        {/* <h3>{themeId}</h3> */}
+        <h3>お題のタイトル：{themeDetail.theme_title}</h3>
         <div>
             <input type="text" placeholder="神保町"/>
         </div>
 
         <div>
-            <input className='button' type="submit" value="Go!"/>
+          <button>Go!</button>
         </div>
 
         <div>
         <label>現在の正解数：</label>
-        <label>0</label>
+        <label>{themeDetail.entered_contents}</label>
         </div>
 
         <div>
         <label>残りの数：</label>
-        <label>0</label>
+        <label>{themeDetail.num_of_remaining_contents}</label>
         </div>
 
         <div>
         <label>不正解数：</label>
-        <label>0</label>
+        <label>{themeDetail.num_of_incorrect}</label>
         </div>
 
         <div>
         <label>最高記録：</label>
-        <label>0</label>
+        <label>{themeDetail.best_record}</label>
         </div>
 
         <Footer />
