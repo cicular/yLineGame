@@ -33,7 +33,7 @@ const Register = () => {
   const [themeContents, setThemeContents] = useState([]);
 
   const createNewTheme = () => {
-    alert(themeTitle)
+    alert(themeTitle);
     axios.post(url, {
       theme_title: themeTitle,
       theme_contents: themeContents,

@@ -19,6 +19,7 @@ urlpatterns = [
     path('form_theme', views.form_theme, name='form_theme'),
     path('index2', views.index2, name='index2'),
     # ()を書かないと、but 2 were givenエラーになる。
-    path('theme', views.ThemeViewSet.as_view(), name='theme')
+    path('theme', views.ThemeViewSet.as_view(), name='theme'),
     # path('theme', views.theme_list, name='theme')
+    path('themeDetail/<int:pk>', views.ThemeViewSetDetail.as_view(), name='themeDetail')
 ]
