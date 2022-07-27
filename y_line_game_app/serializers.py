@@ -15,11 +15,11 @@ class GetThemeSerializer(serializers.ModelSerializer):
 class PostThemeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Theme
-        # fields = '__all__'
+        fields = '__all__'
         # field = ["theme_id", "theme_title"]
-        fields = (
-            "theme_id", "theme_title"
-        )
+        # fields = (
+        #     "theme_id", "theme_title"
+        # )
 
 
 class GetThemeSerializer2(serializers.ModelSerializer):

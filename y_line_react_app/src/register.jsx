@@ -34,12 +34,16 @@ const Register = () => {
 
   const createNewTheme = () => {
     alert(themeTitle);
+    const contents_array = themeContents.split(",");
+    const numOfContents = contents_array.length;
+
     axios.post(url, {
       theme_title: themeTitle,
       theme_contents: themeContents,
+      entered_contents: 0,
       user_id: 1,
       num_of_plays: 0,
-      num_of_contents: 0,
+      num_of_contents: numOfContents,
       public_flg: '1',
       delete_flg: '0',
     })

@@ -15,8 +15,16 @@ class Theme(models.Model):
     # お題の内容
     # PostgreSQLの最大文字数は1GB（=10485760）。
     theme_contents = models.TextField()
+    # 入力された値
     entered_contents = models.TextField(null=True)
+    # 登録者
     user_id = models.IntegerField()
+    # 残りの数
+    num_of_remaining_contents = models.IntegerField(null=True, default=0)
+    # 不正解数
+    num_of_incorrect = models.IntegerField(default=0)
+    # プレイ時間
+    play_time = models.DateTimeField(null=True)
     # お題の登録日時
     registration_time = models.DateTimeField(default=timezone.datetime.now)
     # お題の更新日時
@@ -24,11 +32,12 @@ class Theme(models.Model):
     # 最終プレイ時間
     last_play_time = models.DateTimeField(null=True)
     # プレイ回数
-    num_of_plays = models.IntegerField()
+    num_of_plays = models.IntegerField(default=0)
+    # お題内容の数
     num_of_contents = models.IntegerField()
     # 最高記録
-    best_record = models.IntegerField(null=True)
+    best_record = models.IntegerField(null=True, default=0)
     # 公開フラグ
-    public_flg = models.CharField(max_length=1)
+    public_flg = models.CharField(max_length=1, default=0)
     # 削除フラグ
-    delete_flg = models.CharField(max_length=1)
+    delete_flg = models.CharField(max_length=1, default=0)
