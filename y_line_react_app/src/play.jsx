@@ -11,6 +11,8 @@ import './App.css';
 import './style.css';
 // import { getThemeDetail } from './api';
 
+let url = 'http://127.0.0.1:8000/y_line_game_app/theme'
+
 const Play = () => {
   const [themeDetail, setThemeDetail] = useState([]);
   // const [bestRecord, setBestRecord] = useState([]);
@@ -18,20 +20,42 @@ const Play = () => {
   // const [searchParams] = useSearchParams();
   // const themeId = searchParams.get("themeId");
 
-  const getThemeDetail = (themeId) => {
-    console.log("getThemeDetail");
-    console.log(themeId)
-    // let url = 'http://127.0.0.1:8000/y_line_game_app/themeDetail$1'
-    // let url = 'http://127.0.0.1:8000/y_line_game_app/themeDetail/1'
-    let url = `http://127.0.0.1:8000/y_line_game_app/themeDetail/${themeId}`;
-    console.log(url);
-    axios.get(url).then((response) => {
-        console.log(response.data);
-    //   return toJson(response);
-        return response.data;
-    });
-  }
+  const [input_value, setInputValue] = useState([]);
 
+  // useEffect(()=> {
+    const updateTheme = (tid, iv) => {
+      alert(tid);
+
+      axios.put(url, {
+        entered_contents: 0,
+        public_flg: '3',
+        delete_flg: '3',
+      })
+      .then(response => {
+        themeDetail([...themeDetail, response.data])
+      })
+      .catch(error => {
+        console.log(error);
+      });
+    }
+  // },[]);
+
+  // useEffect(()=> {
+    const getThemeDetail = (tid, iv) => {
+
+      console.log("getThemeDetail!!!!!!!!!!!!!!!!!!!!!11");
+      console.log(tid)
+      // let url = 'http://127.0.0.1:8000/y_line_game_app/themeDetail$1'
+      // let url = 'http://127.0.0.1:8000/y_line_game_app/themeDetail/1'
+      let url = `http://127.0.0.1:8000/y_line_game_app/themeDetail/${themeId}`;
+      console.log(url);
+      axios.put(url).then((response) => {
+          console.log(response.data);
+      //   return toJson(response);
+          setThemeDetail(response.data);
+        });
+    }
+  // },[]);
 
   useEffect(()=> {
     // const data = getThemeDetail(themeId);
@@ -54,11 +78,15 @@ const Play = () => {
         {/* <h3>{themeId}</h3> */}
         <h3>お題のタイトル：{themeDetail.theme_title}</h3>
         <div>
-            <input type="text" placeholder="神保町"/>
+            <input type="text" placeholder="神保町" value={ input_value } onChange={(event) => setInputValue(event.target.value)}/>
         </div>
 
         <div>
-          <button>Go!</button>
+          {/* この書き方だと、onClickがクリックしなくても動作してしまう。 */}
+          {/* <button onClick={ updateTheme(themeId, input_value) }>Go!</button> */}
+          {/* https://zenn.dev/eitches/articles/08526d58abd83b */}
+          {/* https://qiita.com/tak001/items/5b51c02700573072f9e4 */}
+          <button onClick={() => updateTheme(themeId, input_value)}>Go!</button>
         </div>
 
         <div>
