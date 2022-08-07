@@ -65,6 +65,22 @@ const Play = () => {
       }else{
         num_of_remaining_contents -= 1;
       }
+
+      let entered_contents = themeDetail.entered_contents + ',' + iv;
+
+      // すべて入力した場合
+      if (num_of_remaining_contents === 0){
+        alert("クリア！！！！");
+        // 残りの数をリセット
+        num_of_remaining_contents = themeDetail.num_of_contents;
+        // 正解数をリセット
+        num_of_correct = 0;
+        console.log(num_of_correct);
+        // 入力値をリセット
+        entered_contents = null;
+        console.log(entered_contents);
+      }
+
       // content_value_array.forEach(function(element) {
       //   alert(element)
       // });
@@ -76,7 +92,7 @@ const Play = () => {
       // }
 
       let update_data = {
-        entered_contents: themeDetail.entered_contents + ',' + iv,
+        entered_contents: entered_contents,
         user_id:9,
         theme_title: themeDetail.theme_title,
         theme_contents: themeDetail.theme_contents,
