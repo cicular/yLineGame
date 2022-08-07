@@ -19,6 +19,7 @@ const List = () => {
     axios.get(url).then((response) => {
       setThemes(response.data);
       console.log(response.data);
+      console.log(response.data.length);
     });
     // ここでログはいても空が出力される。先に24行目が実行されるから。
     console.log(themes);
@@ -52,6 +53,9 @@ const List = () => {
               <th>タイトル</th>
             </tr>
           </thead>
+          { for (const element of themes) {
+
+          }; }
           <tbody>
 
           </tbody>
@@ -59,7 +63,7 @@ const List = () => {
         {/* <ul> */}
         {/* {res.data} */}
 
-        <ul>
+        <ul className='li_style'>
         {/* Unchecked runtime.lastError: The message port closed before a response was received.   */}
         {/* { themes[0]} */}
 
@@ -67,7 +71,7 @@ const List = () => {
         {/* { themes.map(theme => <li key={theme.theme_id}><Link to="/play${daily.id}" onClick={getEachTheme(theme.theme_id)}>{theme.theme_title}</Link></li>)} */}
         {/* 参考：https://zenn.dev/piyopanman/articles/fc05052ddf2fe6 */}
         {/* { themes.map(theme => <li key={theme.theme_id}><Link to="/play?themeId=1">{theme.theme_title}</Link></li>)} */}
-        { themes.map(theme => <li key={theme.theme_id}><Link to={`/play/${theme.theme_id}`}>{theme.theme_title}</Link></li>)}
+        { themes.map(theme => <li className='list' key={theme.theme_id}><Link to={`/play/${theme.theme_id}`}>{theme.theme_title}</Link></li>)}
       </ul>
 
         <Footer />

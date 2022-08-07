@@ -35,3 +35,12 @@ img{
 .menu{
     margin: 0 5px;
 }
+
+.list {
+    border: 1px solid;
+    border-color: #797979;
+}
+
+.li_style {
+    list-style:none
+}
