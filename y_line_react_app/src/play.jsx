@@ -75,10 +75,10 @@ const Play = () => {
         num_of_remaining_contents = themeDetail.num_of_contents;
         // 正解数をリセット
         num_of_correct = 0;
-        console.log(num_of_correct);
+        // 不正解数をリセット
+        num_of_incorrect = 0;
         // 入力値をリセット
         entered_contents = null;
-        console.log(entered_contents);
       }
 
       // content_value_array.forEach(function(element) {
