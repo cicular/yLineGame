@@ -1,6 +1,6 @@
-from .serializers import ThemeSerializer
-from .models import Theme
-from rest_framework.generics import ListAPIView, ListCreateAPIView
+# from .serializers import ThemeSerializer
+# from .models import Theme
+# from rest_framework.generics import ListAPIView, ListCreateAPIView
 
 
 # class Api(ListCreateAPIView):

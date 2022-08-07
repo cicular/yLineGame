@@ -11,7 +11,7 @@ import './App.css';
 import './style.css';
 // import { getThemeDetail } from './api';
 
-let url = 'http://127.0.0.1:8000/y_line_game_app/theme'
+let url1 = 'http://127.0.0.1:8000/y_line_game_app/theme'
 
 const Play = () => {
   const [themeDetail, setThemeDetail] = useState([]);
@@ -24,13 +24,20 @@ const Play = () => {
 
   // useEffect(()=> {
     const updateTheme = (tid, iv) => {
-      alert(tid);
+      // let url = `http://127.0.0.1:8000/y_line_game_app/themeDetail/${themeId}`;
+      // https://zenn.dev/uichiyy/scraps/bedfe1c540153d
+      let url = `http://127.0.0.1:8000/y_line_game_app/theme2222/${themeId}/`;
+      alert(url);
 
-      axios.put(url, {
+      let data1 = {
         entered_contents: 0,
-        public_flg: '3',
-        delete_flg: '3',
-      })
+        user_id:9,
+        theme_title: '更新',
+        theme_contents: '更新内容',
+        num_of_contents: 40,
+      }
+
+      axios.put(url, data1)
       .then(response => {
         themeDetail([...themeDetail, response.data])
       })

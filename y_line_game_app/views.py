@@ -1,9 +1,11 @@
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
+from rest_framework.response import Response
+
 from . import forms
-from rest_framework import viewsets
+from rest_framework import viewsets, status
 from rest_framework import views
-from .serializers import GetThemeSerializer, PostThemeSerializer, GetThemeSerializer2
+from .serializers import GetThemeSerializer, PostThemeSerializer, GetThemeSerializer2, PutThemeSerializer
 from .models import Theme
 
 # def index(request):
@@ -92,6 +94,7 @@ def theme_list(request):
 
 # https://www.ariseanalytics.com/activities/report/20210205/
 class ThemeViewSet(views.APIView):
+    # 新規作成
     def post(self, request, *args, **kwargs):
         print("★★★★★★★★★★★★★★★★★★★★★★★★★★★★★")
         print(request.data)
@@ -112,10 +115,30 @@ class ThemeViewSet(views.APIView):
         serializer = GetThemeSerializer(queryset, many=True)
         return JsonResponse(serializer.data, safe=False)
 
+    # https://selfnote.work/20200525/programming/django-rest-framework-basic4/
+    # 更新
+    def put(self, request, pk):
+        print("★★★★★★★★★★★★★★★★★★★★★★★★★★★★★")
+        selected_theme = Theme.objects.get(theme_id=pk)
+        # シリアライザオブジェクトを作成
+        serializer = PutThemeSerializer(data=request.data)
+        if serializer.is_valid():
+            # モデルオブジェクトを登録
+            serializer.save()
+            # レスポンスオブジェクトを返す
+            return JsonResponse(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 # theme_idをキーとしてデータを取得したい。
 # https://selfnote.work/20200525/programming/django-rest-framework-basic4/#URL%E3%83%87%E3%82%A3%E3%82%B9%E3%83%91%E3%83%83%E3%83%81%E3%83%A3%E3%81%AE%E5%A4%89%E6%9B%B4-2
 class ThemeViewSetDetail(views.APIView):
+    # def get_object(self, pk):
+    #     try:
+    #         return Theme.objects.get(pk=pk)
+    #     except Theme.DoesNotExist:
+    #         raise Theme
+
     def get(self, request, pk):
         print(pk)
         # {"theme_id": 1, "theme_title": "\u5c71\u624b\u7dda\u306e\u99c5", "theme_contents":
@@ -126,3 +149,29 @@ class ThemeViewSetDetail(views.APIView):
         print("aaaaa")
         # print(JsonResponse(serializer.data))
         return JsonResponse(serializer.data, safe=False)
+
+    # def put(self, request, pk):
+    #     print("★★★★★★★★★★★★★★★★★★★★★★★★★★★★★２")
+    #     # https://qiita.com/Gattaca/items/6cad505b92f69e415b2f を参考に.
+    #     theme = self.get_object(pk)
+    #     # シリアライザオブジェクトを作成
+    #     serializer = PutThemeSerializer(theme, data=request.data)
+    #     # のメソッドを実行した後でなければ validated_data 属性を参照することはできませんし、
+    #     # validated_data を元にオブジェクトを生成する save メソッドも同様に呼び出すことはできません。
+    #     if serializer.is_valid(raise_exception=True):
+    #         # is_validでfalseになる。→APIViewを諦める。
+    #         # モデルオブジェクトを登録
+    #         serializer.save(theme_id=pk)
+    #         # レスポンスオブジェクトを返す
+    #         return JsonResponse(serializer.data)
+    #     print("valid失敗")
+    #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+# https://tech-blog.rakus.co.jp/entry/20220329/python#2ViewSets
+class AAA(viewsets.ModelViewSet):
+    print("★★★★★★★★★★★★★★★★★★★★★★★★★★★★★")
+    # シリアライザーを取得
+    serializer_class = PostThemeSerializer
+    # モデルのオブジェクトを取得
+    queryset = Theme.objects.all()
