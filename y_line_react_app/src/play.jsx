@@ -24,17 +24,26 @@ const Play = () => {
 
   // useEffect(()=> {
     const updateTheme = (tid, iv) => {
+      let get_url = `http://127.0.0.1:8000/y_line_game_app/themeDetail/${themeId}`;
+
+      axios.get(get_url).then((response) => {
+        console.log(response.data);
+        setThemeDetail(response.data);
+      });
+
       // let url = `http://127.0.0.1:8000/y_line_game_app/themeDetail/${themeId}`;
       // https://zenn.dev/uichiyy/scraps/bedfe1c540153d
       let url = `http://127.0.0.1:8000/y_line_game_app/theme2222/${themeId}/`;
-      alert(url);
+      // alert(url);
 
       let data1 = {
-        entered_contents: 0,
+        entered_contents: themeDetail.entered_contents + ',' + iv,
         user_id:9,
-        theme_title: '更新',
-        theme_contents: '更新内容',
-        num_of_contents: 40,
+        theme_title: themeDetail.theme_title,
+        theme_contents: themeDetail.theme_contents,
+        num_of_contents: themeDetail.num_of_contents,
+        num_of_remaining_contents: themeDetail.num_of_remaining_contents - 1,
+        num_of_entered_contents: themeDetail.num_of_entered_contents + 1
       }
 
       axios.put(url, data1)
@@ -98,7 +107,7 @@ const Play = () => {
 
         <div>
         <label>現在の正解数：</label>
-        <label>{themeDetail.entered_contents}</label>
+        <label>{themeDetail.num_of_entered_contents}</label>
         </div>
 
         <div>

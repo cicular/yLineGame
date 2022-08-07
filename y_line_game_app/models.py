@@ -19,6 +19,8 @@ class Theme(models.Model):
     entered_contents = models.TextField(null=True)
     # 登録者
     user_id = models.IntegerField()
+    # 入力された正解値の数
+    num_of_entered_contents = models.IntegerField(default=0)
     # 残りの数
     num_of_remaining_contents = models.IntegerField(null=True, default=0)
     # 不正解数
