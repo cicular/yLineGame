@@ -36,17 +36,57 @@ const Play = () => {
       let url = `http://127.0.0.1:8000/y_line_game_app/theme2222/${themeId}/`;
       // alert(url);
 
-      let data1 = {
+      let content_value_array = themeDetail.theme_contents.split(",");
+      // alert(content_value_array);
+      // console.log(content_value_array.length);
+
+      // 正解数
+      let num_of_correct = themeDetail.num_of_entered_contents;
+      // 不正解数
+      let num_of_incorrect = 0;
+      // 正誤フラグ
+      let correct_flg = false;
+      // 残りの数
+      let num_of_remaining_contents = themeDetail.num_of_remaining_contents;
+
+      for (const element of content_value_array) {
+        // 入力値の正誤判定
+        if (iv === element){
+          num_of_correct += 1;
+          correct_flg = true;
+          break;
+        }else{
+          console.log("不一致");
+        }
+      }
+
+      if (!correct_flg){
+        num_of_incorrect = themeDetail.num_of_incorrect + 1;
+      }else{
+        num_of_remaining_contents -= 1;
+      }
+      // content_value_array.forEach(function(element) {
+      //   alert(element)
+      // });
+
+      // if(themeDetail.theme_contents.match(iv)){
+      //   alert("正解！");
+      // }else{
+      //   alert("不正解");
+      // }
+
+      let update_data = {
         entered_contents: themeDetail.entered_contents + ',' + iv,
         user_id:9,
         theme_title: themeDetail.theme_title,
         theme_contents: themeDetail.theme_contents,
         num_of_contents: themeDetail.num_of_contents,
-        num_of_remaining_contents: themeDetail.num_of_remaining_contents - 1,
-        num_of_entered_contents: themeDetail.num_of_entered_contents + 1
+        num_of_remaining_contents: num_of_remaining_contents,
+        num_of_entered_contents: num_of_correct,
+        num_of_incorrect: num_of_incorrect,
       }
 
-      axios.put(url, data1)
+      axios.put(url, update_data)
       .then(response => {
         themeDetail([...themeDetail, response.data])
       })
