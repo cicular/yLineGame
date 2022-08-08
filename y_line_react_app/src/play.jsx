@@ -6,6 +6,7 @@ import axios from 'axios';
 import Header from "./header";
 import Footer from "./footer";
 import Modal from "./Modal";
+import Modal2 from "./Modal2";
 
 import './App.css';
 import './style.css';
@@ -21,6 +22,8 @@ const Play = () => {
   // モーダル表示
   const [show, setShow] = useState(false);
   const [modal_msg, setMsg] = useState("a");
+  const [show2, setShow2] = useState(false);
+  const [modal_msg2, setMsg2] = useState("b");
 
   // Goボタン押下時の処理
   const updateTheme = (tid, iv) => {
@@ -87,9 +90,18 @@ const Play = () => {
         if (num_of_incorrect === 3){
           setShow(true);
           setMsg('ゲームオーバー！3回間違えました！');
+        }else{
+          const output = () => setShow2(false);
+          setShow2(true);
+          setMsg2("間違いです");
+          setTimeout(output, 700);
         }
       }else{
         num_of_remaining_contents -= 1;
+        const output = () => setShow2(false);
+        setShow2(true);
+        setMsg2("正解！");
+        setTimeout(output, 700);
       }
 
       let entered_contents = themeDetail.entered_contents + ',' + iv;
@@ -165,6 +177,7 @@ const Play = () => {
     return (
       <div className="App">
         <Modal show={show} setShow={setShow} modal_msg={modal_msg}/>
+        <Modal2 show={show2} setShow={setShow2} modal_msg={modal_msg2}/>
         <Header />
         <Link to="/list" className='menu'>お題一覧</Link>
         <Link to="/register" className='menu'>お題登録</Link>
