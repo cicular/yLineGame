@@ -6,6 +6,7 @@ import axios from 'axios';
 
 import Header from "./header";
 import Footer from "./footer";
+import Modal from "./Modal";
 
 import './App.css';
 import './style.css';
@@ -21,6 +22,8 @@ const Play = () => {
   // const themeId = searchParams.get("themeId");
 
   const [input_value, setInputValue] = useState([]);
+  // モーダル表示
+  const [show, setShow] = useState(false);
 
   // useEffect(()=> {
     const updateTheme = (tid, iv) => {
@@ -70,7 +73,6 @@ const Play = () => {
 
       // すべて入力した場合
       if (num_of_remaining_contents === 0){
-        alert("クリア！！！！");
         // 残りの数をリセット
         num_of_remaining_contents = themeDetail.num_of_contents;
         // 正解数をリセット
@@ -79,6 +81,8 @@ const Play = () => {
         num_of_incorrect = 0;
         // 入力値をリセット
         entered_contents = null;
+        // モーダル表示
+        setShow(true);
       }
 
       // content_value_array.forEach(function(element) {
@@ -143,6 +147,7 @@ const Play = () => {
 
     return (
       <div className="App">
+        <Modal show={show} setShow={setShow}/>
         <Header />
         <Link to="/list" className='menu'>お題一覧</Link>
         <Link to="/register" className='menu'>お題登録</Link>
