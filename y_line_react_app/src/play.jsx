@@ -65,9 +65,13 @@ const Play = () => {
             break;
           }
         }
+        // 既出値でない場合
         if (!is_already_entered){
           num_of_correct += 1;
           correct_flg = true;
+          // document.getElementById("answer_input").value = "";
+          // テキストボックスの値を初期化。
+          setInputValue("");
           break;
         }
       }else{
@@ -78,6 +82,8 @@ const Play = () => {
     if (!is_already_entered){
       if (!correct_flg){
         num_of_incorrect = themeDetail.num_of_incorrect + 1;
+        // テキストボックスの値を初期化。
+        setInputValue("");
         if (num_of_incorrect === 3){
           setShow(true);
           setMsg('ゲームオーバー！3回間違えました！');
@@ -162,11 +168,9 @@ const Play = () => {
         <Header />
         <Link to="/list" className='menu'>お題一覧</Link>
         <Link to="/register" className='menu'>お題登録</Link>
-        <h3>プレイ</h3>
-        {/* <h3>{themeId}</h3> */}
-        <h3>お題のタイトル：{themeDetail.theme_title}</h3>
+        <h3>{themeDetail.theme_title}</h3>
         <div>
-            <input type="text" placeholder="神保町" value={ input_value } onChange={(event) => setInputValue(event.target.value)}/>
+            <input type="text" placeholder="" value={ input_value } onChange={(event) => setInputValue(event.target.value)}/>
         </div>
 
         <div>
