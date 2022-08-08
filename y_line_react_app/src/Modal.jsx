@@ -1,9 +1,9 @@
-const Modal = ({show, setShow}) => {
+const Modal = ({show, setShow, modal_msg}) => {
     if (show) {
         return (
           <div id="overlay">
             <div id="content">
-              <p>クリア！すべてを回答しました！！</p>
+              <p>{modal_msg}</p>
               <button onClick={() => setShow(false)}>Close</button>
             </div>
           </div >

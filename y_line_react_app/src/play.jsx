@@ -24,6 +24,7 @@ const Play = () => {
   const [input_value, setInputValue] = useState([]);
   // モーダル表示
   const [show, setShow] = useState(false);
+  const [modal_msg, setMsg] = useState("a");
 
   // useEffect(()=> {
     const updateTheme = (tid, iv) => {
@@ -51,6 +52,8 @@ const Play = () => {
       let correct_flg = false;
       // 残りの数
       let num_of_remaining_contents = themeDetail.num_of_remaining_contents;
+      // モーダルメッセージ
+      let modal_msg;
 
       for (const element of content_value_array) {
         // 入力値の正誤判定
@@ -65,6 +68,10 @@ const Play = () => {
 
       if (!correct_flg){
         num_of_incorrect = themeDetail.num_of_incorrect + 1;
+        if (num_of_incorrect === 3){
+          setShow(true);
+          setMsg('ゲームオーバー！3回間違えました！');
+        }
       }else{
         num_of_remaining_contents -= 1;
       }
@@ -83,6 +90,7 @@ const Play = () => {
         entered_contents = null;
         // モーダル表示
         setShow(true);
+        setMsg("クリア！！すべて回答しました！！");
       }
 
       // content_value_array.forEach(function(element) {
@@ -147,7 +155,7 @@ const Play = () => {
 
     return (
       <div className="App">
-        <Modal show={show} setShow={setShow}/>
+        <Modal show={show} setShow={setShow} modal_msg={modal_msg}/>
         <Header />
         <Link to="/list" className='menu'>お題一覧</Link>
         <Link to="/register" className='menu'>お題登録</Link>
