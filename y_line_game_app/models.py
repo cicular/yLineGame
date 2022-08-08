@@ -16,7 +16,7 @@ class Theme(models.Model):
     # PostgreSQLの最大文字数は1GB（=10485760）。
     theme_contents = models.TextField()
     # 入力された値
-    entered_contents = models.TextField(null=True)
+    entered_contents = models.TextField(default="")
     # 登録者
     user_id = models.IntegerField()
     # 入力された正解値の数

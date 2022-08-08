@@ -10,7 +10,6 @@ import Modal from "./Modal";
 
 import './App.css';
 import './style.css';
-// import { getThemeDetail } from './api';
 
 let url1 = 'http://127.0.0.1:8000/y_line_game_app/theme'
 
@@ -41,6 +40,7 @@ const Play = () => {
       // alert(url);
 
       let content_value_array = themeDetail.theme_contents.split(",");
+        
       // alert(content_value_array);
       // console.log(content_value_array.length);
 
@@ -52,77 +52,90 @@ const Play = () => {
       let correct_flg = false;
       // 残りの数
       let num_of_remaining_contents = themeDetail.num_of_remaining_contents;
-      // モーダルメッセージ
-      let modal_msg;
 
+      let entered_contents_array;
+      entered_contents_array = themeDetail.entered_contents.split(",");
+
+      let is_already_entered = false;
+
+      // お題の内容一覧と照合
       for (const element of content_value_array) {
         // 入力値の正誤判定
         if (iv === element){
-          num_of_correct += 1;
-          correct_flg = true;
-          break;
+          // 一致した場合、既出値と照合
+          for (const ele of entered_contents_array) {
+            if (iv === ele){
+              setShow(true);
+              setMsg("既に入力されています！");
+              is_already_entered = true;
+              break;
+            }
+          }
+          if (!is_already_entered){
+            num_of_correct += 1;
+            correct_flg = true;
+            break;
+          }
         }else{
           console.log("不一致");
         }
       }
 
-      if (!correct_flg){
-        num_of_incorrect = themeDetail.num_of_incorrect + 1;
-        if (num_of_incorrect === 3){
-          setShow(true);
-          setMsg('ゲームオーバー！3回間違えました！');
+      if (!is_already_entered){
+        if (!correct_flg){
+          num_of_incorrect = themeDetail.num_of_incorrect + 1;
+          if (num_of_incorrect === 3){
+            setShow(true);
+            setMsg('ゲームオーバー！3回間違えました！');
+          }
+        }else{
+          num_of_remaining_contents -= 1;
         }
-      }else{
-        num_of_remaining_contents -= 1;
+  
+        let entered_contents = themeDetail.entered_contents + ',' + iv;
+  
+        if (num_of_remaining_contents === 0){
+          // モーダル表示
+          setShow(true);
+          setMsg("クリア！！すべて回答しました！！");
+        }
+  
+        // すべて入力した場合もしくはゲームオーバー時
+        if (num_of_remaining_contents === 0 || num_of_incorrect === 3){
+          // 残りの数をリセット
+          num_of_remaining_contents = themeDetail.num_of_contents;
+          // 正解数をリセット
+          num_of_correct = 0;
+          // 不正解数をリセット
+          num_of_incorrect = 0;
+          // 入力値をリセット 空文字で更新しようとするとBad Requestになる。。。
+          entered_contents = "aa";
+        }
+  
+        // content_value_array.forEach(function(element) {
+        //   alert(element)
+        // });
+  
+        let update_data = {
+          entered_contents: entered_contents,
+          user_id:9,
+          theme_title: themeDetail.theme_title,
+          theme_contents: themeDetail.theme_contents,
+          num_of_contents: themeDetail.num_of_contents,
+          num_of_remaining_contents: num_of_remaining_contents,
+          num_of_entered_contents: num_of_correct,
+          num_of_incorrect: num_of_incorrect,
+        }
+  
+        axios.put(url, update_data)
+        .then(response => {
+          themeDetail([...themeDetail, response.data])
+        })
+        .catch(error => {
+          console.log(error);
+        });
       }
-
-      let entered_contents = themeDetail.entered_contents + ',' + iv;
-
-      // すべて入力した場合
-      if (num_of_remaining_contents === 0){
-        // 残りの数をリセット
-        num_of_remaining_contents = themeDetail.num_of_contents;
-        // 正解数をリセット
-        num_of_correct = 0;
-        // 不正解数をリセット
-        num_of_incorrect = 0;
-        // 入力値をリセット
-        entered_contents = null;
-        // モーダル表示
-        setShow(true);
-        setMsg("クリア！！すべて回答しました！！");
-      }
-
-      // content_value_array.forEach(function(element) {
-      //   alert(element)
-      // });
-
-      // if(themeDetail.theme_contents.match(iv)){
-      //   alert("正解！");
-      // }else{
-      //   alert("不正解");
-      // }
-
-      let update_data = {
-        entered_contents: entered_contents,
-        user_id:9,
-        theme_title: themeDetail.theme_title,
-        theme_contents: themeDetail.theme_contents,
-        num_of_contents: themeDetail.num_of_contents,
-        num_of_remaining_contents: num_of_remaining_contents,
-        num_of_entered_contents: num_of_correct,
-        num_of_incorrect: num_of_incorrect,
-      }
-
-      axios.put(url, update_data)
-      .then(response => {
-        themeDetail([...themeDetail, response.data])
-      })
-      .catch(error => {
-        console.log(error);
-      });
     }
-  // },[]);
 
   // useEffect(()=> {
     const getThemeDetail = (tid, iv) => {
