@@ -46,6 +46,9 @@ const Register = () => {
       setShow(true);
       setMsg("内容を入力してください。");
       return;
+    }else if(themeTitle.length > 200){
+      setShow(true);
+      setMsg("タイトルは200字以内にしてください。");
     }
 
     const contents_array = themeContents.split(",");
