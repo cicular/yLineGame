@@ -1,11 +1,15 @@
 import React, {useState, useEffect} from 'react'
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import useSound from 'use-sound';
 
+// コンポーネント
 import Header from "./header";
 import Footer from "./footer";
 import Modal from './Modal';
 
+// Relative imports outside of src/ are not supported.
+import select_sound from './select.mp3';
 
 let themes;
 // let url = 'https://jsonplaceholder.typicode.com/posts'
@@ -18,10 +22,15 @@ const List = () => {
   // モーダル表示
   const [show, setShow] = useState(false);
   const [modal_msg, setMsg] = useState("b");
+
+  // use-sound
+  const [play_select, {}] = useSound(select_sound);
   
   // 削除ボタン押下時
   const deleteTheme = (tid, title) => {
     let delete_url = `http://127.0.0.1:8000/y_line_game_app/theme2222/${tid}/`;
+
+    play_select();
 
     console.log(delete_url);
 
@@ -77,7 +86,7 @@ const List = () => {
           { themes.map((theme) =>
           <tr className='list'>
             <td key={theme.theme_id}>{theme.theme_title}</td>
-            <td><Link to={`/play/${theme.theme_id}`}><button>Play</button></Link></td>
+            <td><Link to={`/play/${theme.theme_id}`}><button onClick={() => play_select()}>Play</button></Link></td>
             <td>項目数：{theme.num_of_contents}</td>
             <td>最高記録：{theme.best_record}</td>
             <td><Link to={`/edit/${theme.theme_id}`}><button>編集</button></Link></td>

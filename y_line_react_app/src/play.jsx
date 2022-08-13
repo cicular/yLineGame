@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import React, {useState, useEffect} from 'react'
+import useSound from 'use-sound';
 import axios from 'axios';
 
 import Header from "./header";
@@ -10,6 +11,13 @@ import Modal2 from "./Modal2";
 
 import './App.css';
 import './style.css';
+
+// Relative imports outside of src/ are not supported.
+import correct_sound from './correct.mp3';
+import incorrect_sound from './incorrect.mp3';
+import already_entered_sound from './already_entered.mp3';
+import clear_sound from './clear.mp3';
+import game_over_sound from './game_over.mp3';
 
 let url1 = 'http://127.0.0.1:8000/y_line_game_app/theme'
 
@@ -24,6 +32,13 @@ const Play = () => {
   const [modal_msg, setMsg] = useState("a");
   const [show2, setShow2] = useState(false);
   const [modal_msg2, setMsg2] = useState("b");
+
+  // use-sound
+  const [play_correct, {}] = useSound(correct_sound);
+  const [play_incorrect, {}] = useSound(incorrect_sound);
+  const [play_already_entered, {}] = useSound(already_entered_sound);
+  const [play_clear, {}] = useSound(clear_sound);
+  const [play_game_over, {}] = useSound(game_over_sound);
 
   // Goボタン押下時の処理
   const updateTheme = (tid, iv) => {
@@ -69,6 +84,7 @@ const Play = () => {
         // 一致した場合、既出値と照合
         for (const ele of entered_contents_array) {
           if (iv === ele){
+            play_already_entered();
             setShow(true);
             setMsg("既に入力されています！");
             is_already_entered = true;
@@ -95,15 +111,19 @@ const Play = () => {
         // テキストボックスの値を初期化。
         setInputValue("");
         if (num_of_incorrect === 3){
+          play_game_over();
           setShow(true);
           setMsg('ゲームオーバー！3回間違えました！');
         }else{
+          // 不正解音再生
+          play_incorrect();
           const output = () => setShow2(false);
           setShow2(true);
           setMsg2("間違いです");
           setTimeout(output, 700);
         }
       }else{
+        play_correct();
         num_of_remaining_contents -= 1;
         const output = () => setShow2(false);
         setShow2(true);
@@ -114,6 +134,7 @@ const Play = () => {
       let entered_contents = themeDetail.entered_contents + ',' + iv;
   
       if (num_of_remaining_contents === 0){
+        play_clear();
         // モーダル表示
         setShow(true);
         setMsg("クリア！！すべて回答しました！！");
