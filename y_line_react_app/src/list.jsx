@@ -80,6 +80,7 @@ const List = () => {
             <td><Link to={`/play/${theme.theme_id}`}><button>Play</button></Link></td>
             <td>項目数：{theme.num_of_contents}</td>
             <td>最高記録：{theme.best_record}</td>
+            <td><Link to={`/edit/${theme.theme_id}`}><button>編集</button></Link></td>
             <td><button onClick={() => deleteTheme(theme.theme_id, theme.theme_title)}>削除</button></td>
           </tr>)}
           </tbody>

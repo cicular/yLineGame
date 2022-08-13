@@ -1,43 +1,45 @@
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
+import { useParams } from 'react-router-dom';
 
+// コンポーネントインポート
 import Header from "./header";
 import Footer from "./footer";
 import Modal from './Modal';
 
-// axios.post('http://127.0.0.1:8000/listapp/needtobuy/', 登録データ, {
-// headers: {'Content-Type' : 'application:json'}
-// })
-// .then(res => console.log(res.data))
+// 編集画面
+const Edit = () => {
 
-// const createNewUser = () => {
-//   const [users, setUsers] = useState([]);
-
-//   axios.post('https://jsonplaceholder.typicode.com/users', {
-//     firstName: 'Fred',
-//     lastName: 'Flintstone'
-//   })
-//   .then(response => {
-//     setUsers([...users, response.data])
-//   })
-//   .catch(error => {
-//     console.log(error);
-//   });
-// }
-
-const Register = () => {
-  let url = 'http://127.0.0.1:8000/y_line_game_app/theme'
-
-  const [theme, setTheme] = useState([]);
+  const [themeDetail, setThemeDetail] = useState([]);
   const [themeTitle, setThemeTitle] = useState("");
   const [themeContents, setThemeContents] = useState("");
+  const { themeId } = useParams();
 
   // モーダル表示
   const [show, setShow] = useState(false);
   const [modal_msg, setMsg] = useState("b");
 
-  const createNewTheme = () => {
+  useEffect(()=> {
+    let get_url = `http://127.0.0.1:8000/y_line_game_app/themeDetail/${themeId}`;
+    console.log(get_url);
+    axios.get(get_url).then((response) => {
+      console.log(response.data);
+      setThemeDetail(response.data);
+      // themeDetail.theme_titleだと初期表示がされない。response.data.theme_titleだと表示される。
+      setThemeTitle(response.data.theme_title);
+      setThemeContents(response.data.theme_contents);
+      console.log(themeTitle);
+      console.log(themeContents);
+    });
+    // ここでログ出力しても空が出力される。
+    // console.log(themeDetail);
+  },[]);
+
+  // 更新ボタン押下時
+  const updateTheme = () => {
+    let update_url = `http://127.0.0.1:8000/y_line_game_app/theme2222/${themeId}/`;
+
     if(themeTitle === ""){
       setShow(true);
       setMsg("タイトルを入力してください。");
@@ -54,28 +56,23 @@ const Register = () => {
     const contents_array = themeContents.split(",");
     const numOfContents = contents_array.length;
 
-    axios.post(url, {
-      theme_title: themeTitle,
-      theme_contents: themeContents,
-      entered_contents: 0,
-      user_id: 1,
-      num_of_plays: 0,
-      num_of_contents: numOfContents,
-      num_of_remaining_contents: numOfContents,
-      public_flg: '1',
-      delete_flg: '0',
-    })
-    .then(response => {
-      setTheme([...theme, response.data])
-      setShow(true);
-      setMsg("登録しました！");
-      // テキストボックスを初期化
-      setThemeTitle("");
-      setThemeContents("");
-    })
-    .catch(error => {
-      console.log(error);
-    });
+    let update_data = {
+        user_id: 9,
+        theme_title: themeTitle,
+        theme_contents: themeContents,
+        num_of_contents: numOfContents,
+        num_of_entered_contents: themeDetail.num_of_entered_contents,
+        num_of_incorrect: themeDetail.num_of_incorrect,
+      }
+  
+      axios.put(update_url, update_data)
+      .then(response => {
+        setShow(true);
+        setMsg("更新しました！");  
+      })
+      .catch(error => {
+        console.log(error);
+      });
   }
 
   const handleChangeTitle = (e) => {
@@ -91,7 +88,7 @@ const Register = () => {
     <Header />
     <Link to="/list">お題一覧</Link>
     <Modal show={show} setShow={setShow} modal_msg={modal_msg}/>
-    <h3>お題登録</h3>
+    <h3>お題編集</h3>
     <div className="input_area">
         <label>お題のタイトル</label>
         <div>
@@ -107,11 +104,7 @@ const Register = () => {
         <textarea value={themeContents} onChange={handleChangeContents} rows="20" cols="40" placeholder="東京,有楽町,新橋,浜松町,田町,品川,大崎,五反田,目黒,恵比寿,渋谷,原宿,代々木,新宿,新大久保,高田馬場,目白,池袋,大塚,巣鴨,駒込,田端,西日暮里,日暮里,鶯谷,上野,御徒町,秋葉原,神田,高輪ゲートウェイ"></textarea>
         
         <div>
-          {/* <input className='button' type="submit" value="登録" onClick={createNewTheme}/> */}
-          <button onClick={createNewTheme}>登録
-            {/* 登録成功後、なぜモーダルが表示されないかといえば、一覧画面への画面遷移が勝っているから。 */}
-            {/* <Link to="/list" onClick={createNewTheme}>登録</Link> */}
-          </button>
+          <button onClick={updateTheme}>更新</button>
         </div>
     </div>
     <Footer />
@@ -119,4 +112,4 @@ const Register = () => {
   );
 }
   
-export default Register;
+export default Edit;
