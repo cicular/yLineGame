@@ -73,3 +73,8 @@ td {
     background-color: #7af384;  /* 背景色指定 */
     margin:  0 auto;            /* 中央寄せ */
 }
+
+.button_margin {
+    margin-left: 5px;
+    margin-right: 5px;
+}
