@@ -72,8 +72,11 @@ const Play = () => {
     // 残りの数
     let num_of_remaining_contents = themeDetail.num_of_remaining_contents;
 
-    let entered_contents_array;
-    entered_contents_array = themeDetail.entered_contents.split(",");
+    let entered_contents_array = [];
+    console.log(entered_contents_array.length);
+    if(themeDetail.entered_contents != null){
+      entered_contents_array = themeDetail.entered_contents.split(",");
+    }
 
     let is_already_entered = false;
 
@@ -131,7 +134,15 @@ const Play = () => {
         setTimeout(output, 700);
       }
 
-      let entered_contents = themeDetail.entered_contents + ',' + iv;
+      let entered_contents;
+      console.log(themeDetail.entered_contents);
+      // この判定を入れないと、「null」が文字列データと化してしまう。
+      if (themeDetail.entered_contents != null){
+        entered_contents = themeDetail.entered_contents + ',' + iv;
+      }else{
+        // 初回入力時（nullの場合）
+        entered_contents = iv;
+      }
   
       if (num_of_remaining_contents === 0){
         play_clear();
@@ -149,7 +160,7 @@ const Play = () => {
         // 不正解数をリセット
         num_of_incorrect = 0;
         // 入力値をリセット 空文字で更新しようとするとBad Requestになる。。。
-        entered_contents = "aa";
+        entered_contents = null;
       }
   
       let update_data = {
@@ -240,6 +251,11 @@ const Play = () => {
         <label>最高記録：</label>
         <label>{themeDetail.best_record}</label>
         </div>
+
+        <div>
+        <label>入力された値：</label>
+        <label>{themeDetail.entered_contents}</label>
+        </div>        
 
         <Footer />
       </div>
