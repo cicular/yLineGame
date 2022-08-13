@@ -37,12 +37,10 @@ img{
 }
 
 .list {
+    /* border-right: none!important;
+    border-left: none!important; */
     border: 1px solid;
     border-color: #797979;
-}
-
-.li_style {
-    list-style:none
 }
 
 #overlay{
@@ -65,4 +63,13 @@ img{
     width:50%;
     padding: 1em;
     background:#fff;
+}
+
+td {
+    padding: 7px;
+}
+
+.centering_item {
+    background-color: #7af384;  /* 背景色指定 */
+    margin:  0 auto;            /* 中央寄せ */
 }

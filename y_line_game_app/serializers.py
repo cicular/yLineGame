@@ -9,7 +9,7 @@ class GetThemeSerializer(serializers.ModelSerializer):
         # fields = '__all__'
         # field = ["theme_id", "theme_title"]
         fields = (
-            "theme_id", "theme_title"
+            "theme_id", "theme_title", "num_of_contents", "best_record"
         )
 
 

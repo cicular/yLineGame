@@ -4,7 +4,7 @@ import axios from 'axios';
 
 import Header from "./header";
 import Footer from "./footer";
-// import Register from './register';
+
 
 let themes;
 // let url = 'https://jsonplaceholder.typicode.com/posts'
@@ -40,39 +40,28 @@ const List = () => {
   //   }    
   // }, []);
 
-    // if (!themes) return null;
-
     return (
       <div className="App">
       <Header />
       <Link to="/register">お題登録</Link>
         <h1>お題一覧</h1>
-        {/* <table>
-          <thead>
-            <tr>
-              <th>タイトル</th>
-            </tr>
-          </thead>
-          { for (const element of themes) {
 
-          }; }
+        {/* テーブルはブロック要素 */}
+        {/* rulesで枠線の表示方法を変更できる */}
+        <table className='centering_item' rules='groups'>
+          <thead></thead>
           <tbody>
-
+          {/* mapメソッドで展開する場合は、ユニークなkeyを設定する必要があるので注意してください。 */}
+          { themes.map((theme) =>
+          <tr className='list'>
+            <td key={theme.theme_id}>{theme.theme_title}</td>
+            <td><Link to={`/play/${theme.theme_id}`}><button>Play</button></Link></td>
+            <td>項目数：{theme.num_of_contents}</td>
+            <td>最高記録：{theme.best_record}</td>
+            {/* <td><button>削除</button></td> */}
+          </tr>)}
           </tbody>
-        </table> */}
-        {/* <ul> */}
-        {/* {res.data} */}
-
-        <ul className='li_style'>
-        {/* Unchecked runtime.lastError: The message port closed before a response was received.   */}
-        {/* { themes[0]} */}
-
-        {/* mapメソッドで展開する場合は、ユニークなkeyを設定する必要があるので注意してください。 */}
-        {/* { themes.map(theme => <li key={theme.theme_id}><Link to="/play${daily.id}" onClick={getEachTheme(theme.theme_id)}>{theme.theme_title}</Link></li>)} */}
-        {/* 参考：https://zenn.dev/piyopanman/articles/fc05052ddf2fe6 */}
-        {/* { themes.map(theme => <li key={theme.theme_id}><Link to="/play?themeId=1">{theme.theme_title}</Link></li>)} */}
-        { themes.map(theme => <li className='list' key={theme.theme_id}><Link to={`/play/${theme.theme_id}`}>{theme.theme_title}</Link></li>)}
-      </ul>
+        </table>
 
         <Footer />
       </div>
