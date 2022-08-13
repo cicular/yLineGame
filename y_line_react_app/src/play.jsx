@@ -27,12 +27,19 @@ const Play = () => {
 
   // Goボタン押下時の処理
   const updateTheme = (tid, iv) => {
+    console.log("Goボタンを押した。");
+
     let get_url = `http://127.0.0.1:8000/y_line_game_app/themeDetail/${themeId}`;
 
     // 照合のためのデータ取得
     axios.get(get_url).then((response) => {
-      console.log(response.data);
+      // console.log(response.data);
       setThemeDetail(response.data);
+      console.log("テーブルからデータを取得した。");
+    })
+    .catch(error => {
+      console.log(error);
+      return;
     });
 
     // let url = `http://127.0.0.1:8000/y_line_game_app/themeDetail/${themeId}`;
@@ -137,7 +144,9 @@ const Play = () => {
   
       axios.put(update_url, update_data)
       .then(response => {
-        themeDetail([...themeDetail, response.data])
+        console.log("テーブルを更新した1。")
+        setThemeDetail(response.data);
+        console.log("テーブルを更新した2。")
       })
       .catch(error => {
         console.log(error);
