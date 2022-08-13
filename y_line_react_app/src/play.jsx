@@ -89,7 +89,9 @@ const Play = () => {
         // 一致した場合、既出値と照合
         for (const ele of entered_contents_array) {
           if (iv === ele){
+            // 音声再生
             play_already_entered();
+            // モーダル表示
             setShow(true);
             setMsg("既に入力されています！");
             is_already_entered = true;
@@ -119,11 +121,13 @@ const Play = () => {
         if (num_of_incorrect === 3){
           // 音声再生
           play_game_over();
+          // モーダル表示
           setShow(true);
           setMsg('ゲームオーバー！3回間違えました！');
         }else{
           // 音声再生
           play_incorrect();
+          // モーダル表示
           const output = () => setShow2(false);
           setShow2(true);
           setMsg2("間違いです");
@@ -133,6 +137,7 @@ const Play = () => {
         // 音声再生
         play_correct();
         num_of_remaining_contents -= 1;
+        // モーダル表示
         const output = () => setShow2(false);
         setShow2(true);
         setMsg2("正解！");

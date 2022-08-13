@@ -1,10 +1,17 @@
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import React, {useState} from 'react'
+import useSound from 'use-sound';
 
+// コンポーネント
 import Header from "./header";
 import Footer from "./footer";
 import Modal from './Modal';
+
+// use-sound
+// Relative imports outside of src/ are not supported.
+import select_sound from './select.mp3';
+
 
 // axios.post('http://127.0.0.1:8000/listapp/needtobuy/', 登録データ, {
 // headers: {'Content-Type' : 'application:json'}
@@ -27,7 +34,7 @@ import Modal from './Modal';
 // }
 
 const Register = () => {
-  let url = 'http://127.0.0.1:8000/y_line_game_app/theme'
+  let post_url = 'http://127.0.0.1:8000/y_line_game_app/theme'
 
   const [theme, setTheme] = useState([]);
   const [themeTitle, setThemeTitle] = useState("");
@@ -37,6 +44,10 @@ const Register = () => {
   const [show, setShow] = useState(false);
   const [modal_msg, setMsg] = useState("b");
 
+  // use-sound
+  const [play_select, {}] = useSound(select_sound);
+
+  // 登録ボタン押下時
   const createNewTheme = () => {
     if(themeTitle === ""){
       setShow(true);
@@ -49,15 +60,16 @@ const Register = () => {
     }else if(themeTitle.length > 200){
       setShow(true);
       setMsg("タイトルは200字以内にしてください。");
+      return;
     }
 
     const contents_array = themeContents.split(",");
     const numOfContents = contents_array.length;
 
-    axios.post(url, {
+    axios.post(post_url, {
       theme_title: themeTitle,
       theme_contents: themeContents,
-      entered_contents: 0,
+      entered_contents: null,
       user_id: 1,
       num_of_plays: 0,
       num_of_contents: numOfContents,
@@ -66,7 +78,10 @@ const Register = () => {
       delete_flg: '0',
     })
     .then(response => {
-      setTheme([...theme, response.data])
+      setTheme(response.data);
+      // 音声再生
+      play_select();
+      // モーダル表示
       setShow(true);
       setMsg("登録しました！");
       // テキストボックスを初期化

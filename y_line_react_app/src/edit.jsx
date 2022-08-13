@@ -2,11 +2,17 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import React, {useState, useEffect} from 'react'
 import { useParams } from 'react-router-dom';
+import useSound from 'use-sound';
 
 // コンポーネントインポート
 import Header from "./header";
 import Footer from "./footer";
 import Modal from './Modal';
+
+// use-sound
+// Relative imports outside of src/ are not supported.
+import select_sound from './select.mp3';
+import cancel_sound from './cancel.mp3';
 
 // 編集画面
 const Edit = () => {
@@ -19,6 +25,10 @@ const Edit = () => {
   // モーダル表示
   const [show, setShow] = useState(false);
   const [modal_msg, setMsg] = useState("b");
+
+  // use-sound
+  const [play_select, {}] = useSound(select_sound);
+  const [play_cancel, {}] = useSound(cancel_sound);
 
   useEffect(()=> {
     let get_url = `http://127.0.0.1:8000/y_line_game_app/themeDetail/${themeId}`;
@@ -67,6 +77,9 @@ const Edit = () => {
   
       axios.put(update_url, update_data)
       .then(response => {
+        // 音声再生
+        play_select();
+        // モーダル表示
         setShow(true);
         setMsg("更新しました！");  
       })
@@ -105,7 +118,7 @@ const Edit = () => {
         
         <div>
           <button className='button_margin' onClick={updateTheme}>更新</button>
-          <Link to="/list"><button className='button_margin'>戻る</button></Link>
+          <Link to="/list"><button className='button_margin' onClick={() => play_cancel()}>戻る</button></Link>
         </div>
     </div>
     <Footer />

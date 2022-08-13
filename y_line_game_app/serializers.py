@@ -6,7 +6,6 @@ from .models import Theme
 class GetThemeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Theme
-        # fields = '__all__'
         # field = ["theme_id", "theme_title"]
         fields = (
             "theme_id", "theme_title", "num_of_contents", "best_record"
