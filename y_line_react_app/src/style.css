@@ -70,11 +70,26 @@ td {
 }
 
 .centering_item {
-    background-color: #7af384;  /* 背景色指定 */
-    margin:  0 auto;            /* 中央寄せ */
+    /* 中央寄せ */
+    margin: 0 auto;
 }
 
 .button_margin {
     margin-left: 5px;
     margin-right: 5px;
+}
+
+.entered_value_table{
+    font-size: 10px;
+    border: #797979;
+}
+
+.color_green{
+    /* 背景色指定 */
+    background-color: #b0f6b6;
+}
+
+.color_blue{
+    /* 背景色指定 */
+    background-color: #b4daf8;
 }

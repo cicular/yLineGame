@@ -4,14 +4,17 @@ import React, {useState, useEffect} from 'react'
 import useSound from 'use-sound';
 import axios from 'axios';
 
+// コンポーネント
 import Header from "./header";
 import Footer from "./footer";
 import Modal from "./Modal";
 import Modal2 from "./Modal2";
+import EnteredValueTable from './enteredValueTable';
 
 import './App.css';
 import './style.css';
 
+// use-sound
 // Relative imports outside of src/ are not supported.
 import correct_sound from './correct.mp3';
 import incorrect_sound from './incorrect.mp3';
@@ -19,14 +22,13 @@ import already_entered_sound from './already_entered.mp3';
 import clear_sound from './clear.mp3';
 import game_over_sound from './game_over.mp3';
 
-let url1 = 'http://127.0.0.1:8000/y_line_game_app/theme'
-
+// プレイ画面
 const Play = () => {
   const [themeDetail, setThemeDetail] = useState([]);
-  // const [bestRecord, setBestRecord] = useState([]);
   const { themeId } = useParams();
-
   const [input_value, setInputValue] = useState([]);
+  const [entered_value_array, setEnteredValueArray] = useState([]);
+
   // モーダル表示
   const [show, setShow] = useState(false);
   const [modal_msg, setMsg] = useState("a");
@@ -94,7 +96,7 @@ const Play = () => {
             break;
           }
         }
-        // 既出値でない場合
+        // 既出値でない場合＝正解
         if (!is_already_entered){
           num_of_correct += 1;
           correct_flg = true;
@@ -104,21 +106,23 @@ const Play = () => {
           break;
         }
       }else{
-        console.log("不一致");
+        // console.log("不一致");
       }
     }
 
+    // 既出値でない場合
     if (!is_already_entered){
       if (!correct_flg){
         num_of_incorrect = themeDetail.num_of_incorrect + 1;
         // テキストボックスの値を初期化。
         setInputValue("");
         if (num_of_incorrect === 3){
+          // 音声再生
           play_game_over();
           setShow(true);
           setMsg('ゲームオーバー！3回間違えました！');
         }else{
-          // 不正解音再生
+          // 音声再生
           play_incorrect();
           const output = () => setShow2(false);
           setShow2(true);
@@ -126,6 +130,7 @@ const Play = () => {
           setTimeout(output, 700);
         }
       }else{
+        // 音声再生
         play_correct();
         num_of_remaining_contents -= 1;
         const output = () => setShow2(false);
@@ -135,16 +140,23 @@ const Play = () => {
       }
 
       let entered_contents;
-      console.log(themeDetail.entered_contents);
-      // この判定を入れないと、「null」が文字列データと化してしまう。
-      if (themeDetail.entered_contents != null){
-        entered_contents = themeDetail.entered_contents + ',' + iv;
+      // entered_contentsには正解値のみ入れる。
+      if(correct_flg){
+        // この判定を入れないと、「null」が文字列データと化してしまう。
+        if (themeDetail.entered_contents != null){
+          entered_contents = themeDetail.entered_contents + ',' + iv;
+        }else{
+          // 初回入力時（nullの場合）
+          entered_contents = iv;
+        }
+        setEnteredValueArray(entered_contents.split(","));
       }else{
-        // 初回入力時（nullの場合）
-        entered_contents = iv;
+        // 変更なし
+        entered_contents = themeDetail.entered_contents;
       }
-  
+
       if (num_of_remaining_contents === 0){
+        // 音声再生
         play_clear();
         // モーダル表示
         setShow(true);
@@ -206,12 +218,15 @@ const Play = () => {
   useEffect(()=> {
     // const data = getThemeDetail(themeId);
     let url = `http://127.0.0.1:8000/y_line_game_app/themeDetail/${themeId}`;
-    console.log(url);
+    // console.log(url);
     axios.get(url).then((response) => {
-      console.log(response.data);
+      // console.log(response.data);
       setThemeDetail(response.data);
+      if(response.data.entered_contents != null){
+        setEnteredValueArray(response.data.entered_contents.split(","));
+      }
     });
-    // ここでログ出力しても空が出力される。
+    // ここでログ出力しても状態反映されていなくて空が出力される。
     // console.log(themeDetail);
   },[]);
 
@@ -232,7 +247,29 @@ const Play = () => {
           <button onClick={() => updateTheme(themeId, input_value)}>Go!</button>
         </div>
 
-        <div>
+        <table className={'centering_item color_blue'} rules='groups'>
+          <thead></thead>
+          <tbody>
+            <tr>
+              <td>現在の正解数：</td>
+              <td>{themeDetail.num_of_entered_contents}</td>
+            </tr>
+            <tr>
+              <td>残りの数：</td>
+              <td>{themeDetail.num_of_remaining_contents}</td>
+            </tr>
+            <tr>
+              <td>不正解数：</td>
+              <td>{themeDetail.num_of_incorrect}</td>
+            </tr>
+            <tr>
+              <td>最高記録</td>
+              <td>{themeDetail.best_record}</td>
+            </tr>
+          </tbody>
+        </table>
+
+        {/* <div>
         <label>現在の正解数：</label>
         <label>{themeDetail.num_of_entered_contents}</label>
         </div>
@@ -250,12 +287,11 @@ const Play = () => {
         <div>
         <label>最高記録：</label>
         <label>{themeDetail.best_record}</label>
-        </div>
+        </div> */}
 
-        <div>
-        <label>入力された値：</label>
-        <label>{themeDetail.entered_contents}</label>
-        </div>        
+        <EnteredValueTable value={entered_value_array} />
+        {/* これだとpropsを渡してもundefinedになってしまう */}
+        {/* <EnteredValueTable value={themeDetail.entered_contents} /> */}
 
         <Footer />
       </div>

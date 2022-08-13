@@ -8,6 +8,7 @@ import Header from "./header";
 import Footer from "./footer";
 import Modal from './Modal';
 
+// use-sound
 // Relative imports outside of src/ are not supported.
 import select_sound from './select.mp3';
 
@@ -15,9 +16,9 @@ let themes;
 // let url = 'https://jsonplaceholder.typicode.com/posts'
 let url = 'http://127.0.0.1:8000/y_line_game_app/theme'
 
+// 一覧画面
 const List = () => {
   const [themes, setThemes] = useState([]);
-  const [themeId, setThemeId] = useState();
 
   // モーダル表示
   const [show, setShow] = useState(false);
@@ -29,10 +30,10 @@ const List = () => {
   // 削除ボタン押下時
   const deleteTheme = (tid, title) => {
     let delete_url = `http://127.0.0.1:8000/y_line_game_app/theme2222/${tid}/`;
-
+    // 音声再生
     play_select();
 
-    console.log(delete_url);
+    // console.log(delete_url);
 
     // レコード物理削除
     axios.delete(delete_url)
@@ -48,11 +49,12 @@ const List = () => {
   useEffect(() => {
     axios.get(url).then((response) => {
       setThemes(response.data);
-      console.log(response.data);
-      console.log(response.data.length);
+      // console.log(response.data);
+      // console.log(response.data.length);
+    })
+    .catch(error => {
+      console.log(error);
     });
-    // ここでログはいても空が出力される。先に24行目が実行されるから。
-    console.log(themes);
   }, []);
   // setThemeId(themes.themeId);
 
@@ -79,7 +81,7 @@ const List = () => {
 
         {/* テーブルはブロック要素 */}
         {/* rulesで枠線の表示方法を変更できる */}
-        <table className='centering_item' rules='groups'>
+        <table className={'centering_item color_green'} rules='groups'>
           <thead></thead>
           <tbody>
           {/* mapメソッドで展開する場合は、ユニークなkeyを設定する必要があるので注意してください。 */}
