@@ -4,6 +4,7 @@ import axios from 'axios';
 
 import Header from "./header";
 import Footer from "./footer";
+import Modal from './Modal';
 
 
 let themes;
@@ -12,8 +13,28 @@ let url = 'http://127.0.0.1:8000/y_line_game_app/theme'
 
 const List = () => {
   const [themes, setThemes] = useState([]);
-  // const [themes, setThemes] = useState(null);
-  const [themeId, setThemeId] = useState([]);
+  const [themeId, setThemeId] = useState();
+
+  // モーダル表示
+  const [show, setShow] = useState(false);
+  const [modal_msg, setMsg] = useState("b");
+  
+  // 削除ボタン押下時
+  const deleteTheme = (tid, title) => {
+    let delete_url = `http://127.0.0.1:8000/y_line_game_app/theme2222/${tid}/`;
+
+    console.log(delete_url);
+
+    // レコード物理削除
+    axios.delete(delete_url)
+    .then(response => {
+      setShow(true);
+      setMsg(title + "を削除しました！");
+    })
+    .catch(error => {
+      console.log(error);
+    });
+  }
 
   useEffect(() => {
     axios.get(url).then((response) => {
@@ -44,7 +65,8 @@ const List = () => {
       <div className="App">
       <Header />
       <Link to="/register">お題登録</Link>
-        <h1>お題一覧</h1>
+      <h1>お題一覧</h1>
+      <Modal show={show} setShow={setShow} modal_msg={modal_msg}/>
 
         {/* テーブルはブロック要素 */}
         {/* rulesで枠線の表示方法を変更できる */}
@@ -58,7 +80,7 @@ const List = () => {
             <td><Link to={`/play/${theme.theme_id}`}><button>Play</button></Link></td>
             <td>項目数：{theme.num_of_contents}</td>
             <td>最高記録：{theme.best_record}</td>
-            {/* <td><button>削除</button></td> */}
+            <td><button onClick={() => deleteTheme(theme.theme_id, theme.theme_title)}>削除</button></td>
           </tr>)}
           </tbody>
         </table>
