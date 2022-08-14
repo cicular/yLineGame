@@ -73,6 +73,8 @@ const Play = () => {
     let correct_flg = false;
     // 残りの数
     let num_of_remaining_contents = themeDetail.num_of_remaining_contents;
+    // 最高記録
+    let best_record = 0;
 
     let entered_contents_array = [];
     console.log(entered_contents_array.length);
@@ -178,6 +180,17 @@ const Play = () => {
         num_of_incorrect = 0;
         // 入力値をリセット 空文字で更新しようとするとBad Requestになる。。。
         entered_contents = null;
+        // 最高記録
+        // 入力された正解値の数が最高記録を超えている場合
+        console.log(themeDetail.num_of_entered_contents);
+        console.log(themeDetail.best_record);
+        if(themeDetail.num_of_entered_contents > themeDetail.best_record){
+          best_record = themeDetail.num_of_entered_contents;
+        }else{
+          best_record = themeDetail.best_record;
+        }
+      }else{
+        best_record = themeDetail.best_record;
       }
   
       let update_data = {
@@ -189,6 +202,7 @@ const Play = () => {
         num_of_remaining_contents: num_of_remaining_contents,
         num_of_entered_contents: num_of_correct,
         num_of_incorrect: num_of_incorrect,
+        best_record: best_record,
       }
   
       axios.put(update_url, update_data)
@@ -273,26 +287,6 @@ const Play = () => {
             </tr>
           </tbody>
         </table>
-
-        {/* <div>
-        <label>現在の正解数：</label>
-        <label>{themeDetail.num_of_entered_contents}</label>
-        </div>
-
-        <div>
-        <label>残りの数：</label>
-        <label>{themeDetail.num_of_remaining_contents}</label>
-        </div>
-
-        <div>
-        <label>不正解数：</label>
-        <label>{themeDetail.num_of_incorrect}</label>
-        </div>
-
-        <div>
-        <label>最高記録：</label>
-        <label>{themeDetail.best_record}</label>
-        </div> */}
 
         <EnteredValueTable value={entered_value_array} themeDetail={themeDetail} />
         {/* これだとpropsを渡してもundefinedになってしまう */}

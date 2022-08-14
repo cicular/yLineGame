@@ -36,6 +36,17 @@ const EnteredValueTable = (props) => {
 
     // リセットボタン押下時
     const reset = (tDetail) => {
+        let update_best_record = 0;
+        // 入力された正解値の数が最高記録を超えている場合
+        console.log(tDetail.num_of_entered_contents);
+        console.log(tDetail.best_record);
+
+        if(tDetail.num_of_entered_contents > tDetail.best_record){
+            update_best_record = tDetail.num_of_entered_contents;
+        }else{
+            update_best_record = tDetail.best_record;
+        }
+
         let update_url = `http://127.0.0.1:8000/y_line_game_app/theme2222/${tDetail.theme_id}/`;
 
         let update_data = {
@@ -48,6 +59,7 @@ const EnteredValueTable = (props) => {
             num_of_remaining_contents: tDetail.num_of_contents,
             num_of_entered_contents: 0,
             num_of_incorrect: 0,
+            best_record: update_best_record,
           };
       
           axios.put(update_url, update_data)
