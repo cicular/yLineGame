@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Theme
+from .models import Theme, User
 
 
 # Modelクラスで定義しているフィールドをJSON文字列と変換するシリアライザとして利用する。
@@ -35,4 +35,10 @@ class GetThemeSerializer2(serializers.ModelSerializer):
 class PutThemeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Theme
+        fields = '__all__'
+
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
         fields = '__all__'
