@@ -14,7 +14,9 @@ import select_sound from './select.mp3';
 
 let themes;
 // let url = 'https://jsonplaceholder.typicode.com/posts'
-let url = 'http://127.0.0.1:8000/y_line_game_app/theme'
+let url = 'http://127.0.0.1:8000/y_line_game_app/theme/9';
+// let url = 'http://127.0.0.1:8000/y_line_game_app/theme?user_id=9999';
+// let url = 'http://127.0.0.1:8000/y_line_game_app//${themeId}';
 
 // 一覧画面
 const List = () => {
