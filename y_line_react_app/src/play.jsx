@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect} from 'react';
 import useSound from 'use-sound';
 import axios from 'axios';
 
@@ -294,7 +294,7 @@ const Play = () => {
         <label>{themeDetail.best_record}</label>
         </div> */}
 
-        <EnteredValueTable value={entered_value_array} />
+        <EnteredValueTable value={entered_value_array} themeDetail={themeDetail} />
         {/* これだとpropsを渡してもundefinedになってしまう */}
         {/* <EnteredValueTable value={themeDetail.entered_contents} /> */}
 
