@@ -172,6 +172,28 @@ const Play = () => {
   
       // すべて入力した場合もしくはゲームオーバー時
       if (num_of_remaining_contents === 0 || num_of_incorrect === 3){
+        if(num_of_remaining_contents ===0){
+          // 最高記録
+          // 入力された正解値の数が最高記録を超えている場合
+          // テーブル更新前の値で比較をしてしまっていたので修正。
+          console.log(themeDetail.num_of_entered_contents + 1);
+          console.log(themeDetail.best_record);
+          if(themeDetail.num_of_entered_contents + 1> themeDetail.best_record){
+            best_record = themeDetail.num_of_entered_contents + 1;
+          }else{
+            best_record = themeDetail.best_record;
+          }
+        }else{
+          // 最高記録
+          // 入力された正解値の数が最高記録を超えている場合
+          console.log(themeDetail.num_of_entered_contents);
+          console.log(themeDetail.best_record);
+          if(themeDetail.num_of_entered_contents > themeDetail.best_record){
+            best_record = themeDetail.num_of_entered_contents;
+          }else{
+            best_record = themeDetail.best_record;
+          }
+        }
         // 残りの数をリセット
         num_of_remaining_contents = themeDetail.num_of_contents;
         // 正解数をリセット
@@ -180,15 +202,6 @@ const Play = () => {
         num_of_incorrect = 0;
         // 入力値をリセット 空文字で更新しようとするとBad Requestになる。。。
         entered_contents = null;
-        // 最高記録
-        // 入力された正解値の数が最高記録を超えている場合
-        console.log(themeDetail.num_of_entered_contents);
-        console.log(themeDetail.best_record);
-        if(themeDetail.num_of_entered_contents > themeDetail.best_record){
-          best_record = themeDetail.num_of_entered_contents;
-        }else{
-          best_record = themeDetail.best_record;
-        }
       }else{
         best_record = themeDetail.best_record;
       }
