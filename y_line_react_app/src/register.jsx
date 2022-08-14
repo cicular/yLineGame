@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import React, {useState} from 'react'
+import React, {useState} from 'react';
 import useSound from 'use-sound';
 
 // コンポーネント
@@ -123,6 +123,7 @@ const Register = () => {
         
         <div>
           {/* <input className='button' type="submit" value="登録" onClick={createNewTheme}/> */}
+          {/* あれ？これ何回も実行されないの？ */}
           <button onClick={createNewTheme}>登録
             {/* 登録成功後、なぜモーダルが表示されないかといえば、一覧画面への画面遷移が勝っているから。 */}
             {/* <Link to="/list" onClick={createNewTheme}>登録</Link> */}

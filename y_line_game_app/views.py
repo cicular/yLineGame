@@ -3,8 +3,9 @@ from rest_framework.response import Response
 
 from rest_framework import viewsets, status
 from rest_framework import views
-from .serializers import GetThemeSerializer, PostThemeSerializer, GetThemeSerializer2, PutThemeSerializer
-from .models import Theme
+from .serializers import GetThemeSerializer, PostThemeSerializer, GetThemeSerializer2, PutThemeSerializer, \
+    UserSerializer
+from .models import Theme, User
 
 
 # def theme_list(request):
@@ -31,11 +32,11 @@ class ThemeViewSet(views.APIView):
         return JsonResponse(serializer.data)
 
     # 取得
-    def get(self, request, user_id):
+    def get(self, request):
         # theme_id = request.query_params.get('themeId')
         # 警告が消えないが、動作はするので一旦放置とする。
-        # queryset = Theme.objects.all()
-        queryset = Theme.objects.filter(user_id=user_id)
+        queryset = Theme.objects.all()
+        # queryset = Theme.objects.filter(user_id=user_id)
         serializer = GetThemeSerializer(queryset, many=True)
         return JsonResponse(serializer.data, safe=False)
 
@@ -99,3 +100,20 @@ class ThemeModelViewSet(viewsets.ModelViewSet):
     serializer_class = PostThemeSerializer
     # モデルのオブジェクトを取得
     queryset = Theme.objects.all()
+
+
+# class UserModelViewSet(viewsets.ModelViewSet):
+#     print("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■")
+#     # シリアライザーを取得
+#     serializer_class = UserSerializer
+#     # モデルのオブジェクトを取得
+#     queryset = User.objects.all()
+
+
+class UserAPIView(views.APIView):
+    # 主キー指定で1レコードの情報を取得
+    def get(self, request, pk):
+        selected_user = User.objects.get(user_id=pk)
+        serializer = UserSerializer(selected_user)
+        print("User取得")
+        return JsonResponse(serializer.data, safe=False)

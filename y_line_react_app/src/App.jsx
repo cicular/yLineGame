@@ -1,5 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
+// コンポーネントインポート
+import Login from './login';
 import Register from './register';
 import List from './list';
 import Play from './play';
@@ -13,12 +15,11 @@ const App = () => {
     // 「BrowserRouter」は、Reactプロジェクトの中で一度しか使えない。
     <BrowserRouter>
     <Routes>
+    <Route path="/login" element={<Login />}/>
     <Route path="/register" element={<Register />} />
     <Route path="/edit/:themeId" element={ <Edit /> } />
     <Route path="/list" element={<List />} />
     <Route path="/play/:themeId" element={ <Play />} />
-    {/* <Route path="/play" element={ <Play />} /> */}
-
     </Routes>
     <div className="App">
       {/* <header>山手線ゲーム</header> */}
