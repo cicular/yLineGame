@@ -23,7 +23,7 @@ const Header = (props) => {
     );
   }
 
-  // 編集画面
+  // 編集画面、ログイン画面
   if(props.type==="3"){
     return (
       <div className={'App header_area'}>

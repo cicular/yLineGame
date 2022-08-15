@@ -271,7 +271,7 @@ const Play = () => {
 
         <div>
           {/* テーブル更新処理 */}
-          <button onClick={() => updateTheme(themeId, input_value)}>Go!</button>
+          <button className='button_margin' onClick={() => updateTheme(themeId, input_value)}>Go!</button>
         </div>
 
         <table className={'centering_item color_blue'} rules='groups'>

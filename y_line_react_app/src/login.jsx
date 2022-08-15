@@ -124,10 +124,10 @@ const Login = () => {
     
     return(
         <div className="App">
-        <Header />
+        <Header type="3"/>
         <Modal show={show} setShow={setShow} modal_msg={modal_msg}/>
         <h3>ログイン</h3>
-        <div className="input_area">
+        <div>
         <label>ユーザ名</label>
             <div>
                 {/* onChangeを書かないと、入力することができない。 */}
@@ -142,7 +142,7 @@ const Login = () => {
             <input type="password" value={password} onChange={handleChangePassword}/>
         
             <div>
-                <button onClick={() => login(userId)}>ログイン
+                <button className='button_margin' onClick={() => login(userId)}>ログイン
                 {/* 登録成功後、なぜモーダルが表示されないかといえば、一覧画面への画面遷移が勝っているから。 */}
                 {/* <Link to="/list" onClick={createNewTheme}>登録</Link> */}
                 </button>

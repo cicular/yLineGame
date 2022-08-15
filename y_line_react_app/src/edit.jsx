@@ -13,6 +13,7 @@ import Modal from './Modal';
 // Relative imports outside of src/ are not supported.
 import select_sound from './select.mp3';
 import cancel_sound from './cancel.mp3';
+import already_entered_sound from './already_entered.mp3';
 
 // 編集画面
 const Edit = () => {
@@ -29,6 +30,7 @@ const Edit = () => {
   // use-sound
   const [play_select, {}] = useSound(select_sound);
   const [play_cancel, {}] = useSound(cancel_sound);
+  const [play_already_entered, {}] = useSound(already_entered_sound);
 
   useEffect(()=> {
     let get_url = `http://127.0.0.1:8000/y_line_game_app/themeDetail/${themeId}`;
@@ -51,14 +53,17 @@ const Edit = () => {
     let update_url = `http://127.0.0.1:8000/y_line_game_app/theme2222/${themeId}/`;
 
     if(themeTitle === ""){
+      play_already_entered();
       setShow(true);
       setMsg("タイトルを入力してください。");
       return;
     }else if(themeContents === ""){
+      play_already_entered();
       setShow(true);
       setMsg("内容を入力してください。");
       return;
     }else if(themeTitle.length > 200){
+      play_already_entered();
       setShow(true);
       setMsg("タイトルは200字以内にしてください。");
     }

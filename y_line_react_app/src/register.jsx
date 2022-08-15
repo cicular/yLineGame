@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import axios from 'axios';
 import React, {useState} from 'react';
 import useSound from 'use-sound';
@@ -11,6 +10,7 @@ import Modal from './Modal';
 // use-sound
 // Relative imports outside of src/ are not supported.
 import select_sound from './select.mp3';
+import already_entered_sound from './already_entered.mp3';
 
 
 // axios.post('http://127.0.0.1:8000/listapp/needtobuy/', 登録データ, {
@@ -46,18 +46,22 @@ const Register = () => {
 
   // use-sound
   const [play_select, {}] = useSound(select_sound);
+  const [play_already_entered, {}] = useSound(already_entered_sound);
 
   // 登録ボタン押下時
   const createNewTheme = () => {
     if(themeTitle === ""){
+      play_already_entered();
       setShow(true);
       setMsg("タイトルを入力してください。");
       return;
     }else if(themeContents === ""){
+      play_already_entered();
       setShow(true);
       setMsg("内容を入力してください。");
       return;
     }else if(themeTitle.length > 200){
+      play_already_entered();
       setShow(true);
       setMsg("タイトルは200字以内にしてください。");
       return;
