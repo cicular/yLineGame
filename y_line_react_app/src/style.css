@@ -100,3 +100,8 @@ td {
     /* 背景色指定 */
     background-color: #b4daf8;
 }
+
+.user_id_label {
+    padding: 9px;
+    font-size: 14px;
+}

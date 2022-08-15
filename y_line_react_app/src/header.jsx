@@ -9,18 +9,10 @@ import select_sound from './select.mp3';
 // ヘッダー
 const Header = (props) => {
 
-  console.log(props.user_id);
-
   // use-sound
   const [play_select, {}] = useSound(select_sound);
 
   const navigate = useNavigate();
-
-  // useEffect(()=> {
-  //   const user_id = props.user_id;
-  //   console.log("useEffectの中のユーザーID");
-  //   console.log(user_id);
-  // },[]);
 
   // ログアウトボタン押下時イベント
   const logout = () => {
@@ -59,6 +51,7 @@ const Header = (props) => {
         <header className='button_margin'>山手線ゲーム</header>
         <Link to="/register" state={{user_id: props.user_id}}><button className='button_margin' onClick={() => play_select()}>お題登録</button></Link>
         <button className='button_margin' onClick={() => logout()}>ログアウト</button>
+        <label className='user_id_label'>ログイン中：{props.user_id}さん</label>
       </div>
     );
   }
@@ -70,6 +63,7 @@ const Header = (props) => {
         <header className='button_margin'>山手線ゲーム</header>
         <Link to="/list" state={{user_id: props.user_id}}><button className='button_margin' onClick={() => play_select()}>お題一覧</button></Link>
         <button className='button_margin' onClick={() => logout()}>ログアウト</button>
+        <label className='user_id_label'>ログイン中：{props.user_id}さん</label>
       </div>
     );
   }
@@ -80,6 +74,7 @@ const Header = (props) => {
       <div className={'App header_area'}>
         <header className='button_margin'>山手線ゲーム</header>
         <button className='button_margin' onClick={() => logout()}>ログアウト</button>
+        <label className='user_id_label'>ログイン中：{props.user_id}さん</label>
       </div>
     );
   }
@@ -92,6 +87,7 @@ const Header = (props) => {
         <Link to="/list" state={{user_id: props.user_id}}><button className='button_margin' onClick={() => play_select()}>お題一覧</button></Link>
         <Link to="/register" state={{user_id: props.user_id}}><button className='button_margin' onClick={() => play_select()}>お題登録</button></Link>
         <button className='button_margin' onClick={() => logout()}>ログアウト</button>
+        <label className='user_id_label'>ログイン中：{props.user_id}さん</label>
       </div>
     );
   }
