@@ -19,7 +19,7 @@ class Theme(models.Model):
     # 入力された値
     entered_contents = models.TextField(default="", null=True)
     # 登録者
-    user_id = models.IntegerField()
+    user_id = models.CharField(max_length=20)
     # 入力された正解値の数
     num_of_entered_contents = models.IntegerField(default=0)
     # 残りの数
