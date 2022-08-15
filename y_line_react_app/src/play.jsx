@@ -266,9 +266,7 @@ const Play = () => {
       <div className="App">
         <Modal show={show} setShow={setShow} modal_msg={modal_msg}/>
         <Modal2 show={show2} setShow={setShow2} modal_msg={modal_msg2}/>
-        <Header />
-        <Link to="/list" className='menu'>お題一覧</Link>
-        <Link to="/register" className='menu'>お題登録</Link>
+        <Header type="4"/>
         <h3>{themeDetail.theme_title}</h3>
         <div>
             <input type="text" placeholder="" value={ input_value } onChange={(event) => setInputValue(event.target.value)}/>

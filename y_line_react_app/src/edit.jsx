@@ -98,8 +98,7 @@ const Edit = () => {
 
   return (
     <div className="App">
-    <Header />
-    <Link to="/list">お題一覧</Link>
+    <Header type="3"/>
     <Modal show={show} setShow={setShow} modal_msg={modal_msg}/>
     <h3>お題編集</h3>
     <div className="input_area">

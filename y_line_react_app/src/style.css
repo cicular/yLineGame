@@ -5,6 +5,15 @@
     flex-direction: column; */
 }
 
+.header_area{
+    background-color: #c2efb8;
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+    /* width: 200px; */
+}
+
+
 button{
     border-radius: 8px;
     /* 枠線を消す */
@@ -30,10 +39,6 @@ button:hover{
 img{
     width: 25px;
     height: 13px;
-}
-
-.menu{
-    margin: 0 5px;
 }
 
 .list {
@@ -86,7 +91,7 @@ td {
 
 .color_green{
     /* 背景色指定 */
-    background-color: #b0f6b6;
+    background-color: #c2efb8;
 }
 
 .color_blue{

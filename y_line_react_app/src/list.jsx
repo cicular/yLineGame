@@ -77,9 +77,8 @@ const List = () => {
 
     return (
       <div className="App">
-      <Header />
-      <Link to="/register">お題登録</Link>
-      <h1>お題一覧</h1>
+      <Header type="1" />
+      <h3>お題一覧</h3>
       <Modal show={show} setShow={setShow} modal_msg={modal_msg}/>
 
         {/* テーブルはブロック要素 */}
