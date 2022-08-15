@@ -62,6 +62,7 @@ const Login = () => {
           .then(response => {
             console.log("テーブルを更新しました。");
             // ここだとtrueが戻り値として返却されない。なぜ？
+            // →紛らわしいですがthen()の中のreturnは、あくまでthen()に渡している関数のreturnです。
             // return true;
           })
           .catch(error => {
@@ -77,22 +78,36 @@ const Login = () => {
         if(!checkInput()){
             return;
         }
+
+        let password_of_table;
+
         // バッククウォーテーション
         // let user_get_url = `http://127.0.0.1:8000/y_line_game_app/user/${id}/`;
         let user_get_url = `http://127.0.0.1:8000/y_line_game_app/user/${id}`;
         axios.get(user_get_url).then((response) => {
-            console.log(response.data);
             setUserInfo(response.data);
+            // thenの中でひとつの関数となっているため、
+            // 上のpassword_of_tableとは別のローカル変数になっている。
+            // そのため、スコープはthenの中のみであるため、下の一致判定でundefinedになる。
+            password_of_table = response.data.password;
+            console.log(password_of_table);
           })
           .catch(error => {
             console.log(error);
             setShow(true);
-            setMsg("ユーザ名かパスワードが誤っています。");
+            setMsg("ユーザ名かパスワードが誤っています。1");
             setPassword("");
+            return;
           });
         
-        if(userInfo.password === password){
+        console.log(password_of_table);
+
+        // if(userInfo.password === password){ 
+        // ※2回連続でログインしようとすると、2回目で必ずuserInfo.passwordがundefinedになってログインに失敗する。stateの更新が反映されていないことが原因である。
+        if(password_of_table === password){
             if(update_user_table(user_get_url)){
+                console.log(password);
+                console.log(userInfo.password);    
                 navigate('/list');
             }else{
                 setShow(true);
@@ -100,8 +115,10 @@ const Login = () => {
                 setPassword("");
             }
         }else{
+            console.log(password);
+            console.log(password_of_table);
             setShow(true);
-            setMsg("ユーザ名かパスワードが誤っています。");
+            setMsg("ユーザ名かパスワードが誤っています。2");
             setPassword("");
         }
     }
