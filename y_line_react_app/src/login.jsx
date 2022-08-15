@@ -65,15 +65,17 @@ const Login = () => {
           })
           .catch(error => {
             console.log(error);
-            alert("ログイン失敗");
-            return;
+            setShow(true);
+            setMsg("ユーザ名かパスワードが誤っています。");
+            setPassword("");
           });
         
         if(userInfo.password === password){
-            alert("ログイン成功");
             navigate('/list');
         }else{
-            alert("ログイン失敗");
+            setShow(true);
+            setMsg("ユーザ名かパスワードが誤っています。");
+            setPassword("");
         }
     }
     
