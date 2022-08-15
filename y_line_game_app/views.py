@@ -18,25 +18,23 @@ from .models import Theme, User
 
 # https://www.ariseanalytics.com/activities/report/20210205/
 class ThemeViewSet(views.APIView):
-    # 新規作成
-    def post(self, request, *args, **kwargs):
-        print("★★★★★★★★★★★★★★★★★★★★★★★★★★★★★")
-        print(request.data)
-        # シリアライザオブジュエクトを作成
-        serializer = PostThemeSerializer(data=request.data)
-        # バリデーション
-        serializer.is_valid(raise_exception=True)
-        # モデルオブジェクトを登録
-        serializer.save()
-        # レスポンスオブジェクトを返す
-        return JsonResponse(serializer.data)
+    # # 新規作成
+    # def post(self, request, *args, **kwargs):
+    #     # シリアライザオブジェクトを作成
+    #     serializer = PostThemeSerializer(data=request.data)
+    #     # バリデーション
+    #     serializer.is_valid(raise_exception=True)
+    #     # モデルオブジェクトを登録
+    #     serializer.save()
+    #     # レスポンスオブジェクトを返す
+    #     return JsonResponse(serializer.data)
 
-    # 取得
-    def get(self, request):
+    # ユーザIDを条件としてお題を取得
+    def get(self, request, user_id):
         # theme_id = request.query_params.get('themeId')
         # 警告が消えないが、動作はするので一旦放置とする。
-        queryset = Theme.objects.all()
-        # queryset = Theme.objects.filter(user_id=user_id)
+        # queryset = Theme.objects.all()
+        queryset = Theme.objects.filter(user_id=user_id)
         serializer = GetThemeSerializer(queryset, many=True)
         return JsonResponse(serializer.data, safe=False)
 
@@ -72,7 +70,6 @@ class ThemeViewSetDetail(views.APIView):
         selected_theme = Theme.objects.get(theme_id=pk)
         serializer = GetThemeSerializer2(selected_theme)
         print("ThemeDetail取得")
-        # print(JsonResponse(serializer.data))
         return JsonResponse(serializer.data, safe=False)
 
     # def put(self, request, pk):

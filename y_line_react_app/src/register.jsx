@@ -34,7 +34,7 @@ import select_sound from './select.mp3';
 // }
 
 const Register = () => {
-  let post_url = 'http://127.0.0.1:8000/y_line_game_app/theme'
+  let post_url = 'http://127.0.0.1:8000/y_line_game_app/theme2222/';
 
   const [theme, setTheme] = useState([]);
   const [themeTitle, setThemeTitle] = useState("");
