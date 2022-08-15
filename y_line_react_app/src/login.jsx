@@ -50,6 +50,27 @@ const Login = () => {
         return true;
     }
 
+    // ユーザテーブルのログインフラグを更新
+    const update_user_table = (url) => {
+        let update_data = {
+            password: userInfo.password,
+            login_flg: "1",
+            delete_flg: userInfo.delete_flg,
+          }
+
+          axios.put(url, update_data)
+          .then(response => {
+            console.log("テーブルを更新しました。");
+            // ここだとtrueが戻り値として返却されない。なぜ？
+            // return true;
+          })
+          .catch(error => {
+            console.log(error);
+            return false;
+          });
+        return true;
+    }
+
     // ログインボタン押下時イベント
     const login = (id) => {
         // 入力チェック
@@ -71,7 +92,13 @@ const Login = () => {
           });
         
         if(userInfo.password === password){
-            navigate('/list');
+            if(update_user_table(user_get_url)){
+                navigate('/list');
+            }else{
+                setShow(true);
+                setMsg("データベース接続に失敗しました。");
+                setPassword("");
+            }
         }else{
             setShow(true);
             setMsg("ユーザ名かパスワードが誤っています。");
@@ -96,7 +123,7 @@ const Login = () => {
             </div>
 
             {/* onChangeを書かないと、入力することができない。 */}
-            <input type="text" value={password} onChange={handleChangePassword}/>
+            <input type="password" value={password} onChange={handleChangePassword}/>
         
             <div>
                 <button onClick={() => login(userId)}>ログイン

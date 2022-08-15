@@ -114,3 +114,20 @@ class UserAPIView(views.APIView):
         serializer = UserSerializer(selected_user)
         print("User取得")
         return JsonResponse(serializer.data, safe=False)
+
+    # 更新
+    def put(self, request, pk):
+        user = User.objects.get(user_id=pk)
+        # user = self.get_object(user_id=pk)
+        # シリアライザオブジェクトを作成
+        # serializer = UserSerializer(user, data=request.data)
+        serializer = UserSerializer(user, data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            # モデルオブジェクトを登録
+            serializer.save(user_id=pk)
+            # レスポンスオブジェクトを返す
+            print("ユーザテーブルを更新しました。")
+            return JsonResponse(serializer.data)
+        else:
+            print("valid失敗")
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

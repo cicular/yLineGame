@@ -220,9 +220,7 @@ const Play = () => {
   
       axios.put(update_url, update_data)
       .then(response => {
-        console.log("テーブルを更新した1。")
         setThemeDetail(response.data);
-        console.log("テーブルを更新した2。")
       })
       .catch(error => {
         console.log(error);
