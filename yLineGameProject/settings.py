@@ -131,7 +131,8 @@ USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+# warnings.warn(“DateTimeField %s received a naive datetime (%s)”という警告が出たのでFalseに変更。
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)
