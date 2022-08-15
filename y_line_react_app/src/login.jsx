@@ -51,9 +51,9 @@ const Login = () => {
     }
 
     // ユーザテーブルのログインフラグを更新
-    const update_user_table = (url) => {
+    const update_user_table = (url, password) => {
         let update_data = {
-            password: userInfo.password,
+            password: password,
             login_flg: "1",
             delete_flg: userInfo.delete_flg,
           }
@@ -61,9 +61,6 @@ const Login = () => {
           axios.put(url, update_data)
           .then(response => {
             console.log("テーブルを更新しました。");
-            // ここだとtrueが戻り値として返却されない。なぜ？
-            // →紛らわしいですがthen()の中のreturnは、あくまでthen()に渡している関数のreturnです。
-            // return true;
           })
           .catch(error => {
             console.log(error);
@@ -79,18 +76,26 @@ const Login = () => {
             return;
         }
 
-        let password_of_table;
-
         // バッククウォーテーション
         // let user_get_url = `http://127.0.0.1:8000/y_line_game_app/user/${id}/`;
         let user_get_url = `http://127.0.0.1:8000/y_line_game_app/user/${id}`;
         axios.get(user_get_url).then((response) => {
             setUserInfo(response.data);
-            // thenの中でひとつの関数となっているため、
-            // 上のpassword_of_tableとは別のローカル変数になっている。
-            // そのため、スコープはthenの中のみであるため、下の一致判定でundefinedになる。
-            password_of_table = response.data.password;
-            console.log(password_of_table);
+            if(response.data.password === password){
+                if(update_user_table(user_get_url, password)){
+                    console.log(password);
+                    console.log(userInfo.password); /* これはundefinedになることがある。*/
+                    navigate('/list');
+                }else{
+                    setShow(true);
+                    setMsg("データベース接続に失敗しました。");
+                    setPassword("");
+                }
+            }else{
+                setShow(true);
+                setMsg("ユーザ名かパスワードが誤っています。2");
+                setPassword("");
+            }    
           })
           .catch(error => {
             console.log(error);
@@ -99,28 +104,6 @@ const Login = () => {
             setPassword("");
             return;
           });
-        
-        console.log(password_of_table);
-
-        // if(userInfo.password === password){ 
-        // ※2回連続でログインしようとすると、2回目で必ずuserInfo.passwordがundefinedになってログインに失敗する。stateの更新が反映されていないことが原因である。
-        if(password_of_table === password){
-            if(update_user_table(user_get_url)){
-                console.log(password);
-                console.log(userInfo.password);    
-                navigate('/list');
-            }else{
-                setShow(true);
-                setMsg("データベース接続に失敗しました。");
-                setPassword("");
-            }
-        }else{
-            console.log(password);
-            console.log(password_of_table);
-            setShow(true);
-            setMsg("ユーザ名かパスワードが誤っています。2");
-            setPassword("");
-        }
     }
     
     return(
