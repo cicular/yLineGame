@@ -51,6 +51,8 @@ class User(models.Model):
     user_id = models.AutoField(primary_key=True)
     # パスワード
     password = models.CharField(max_length=20)
+    # ログインフラグ
+    login_flg = models.CharField(max_length=1, default=0)
     # 登録日時
     registration_time = models.DateTimeField(default=timezone.datetime.now)
     # 更新日時
