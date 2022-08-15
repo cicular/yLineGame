@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, {useState} from 'react';
 import useSound from 'use-sound';
+import { useLocation } from "react-router-dom";
 
 // コンポーネントインポート
 import Modal from "./Modal";
@@ -77,7 +78,7 @@ const EnteredValueTable = (props) => {
     if(entered_value_array_parent.length != 0){
         return (
             <div>
-                <Modal show={show} setShow={setShow} modal_msg={modal_msg}/>
+                <Modal show={show} setShow={setShow} modal_msg={modal_msg} user_id={props.user_id}/>
                 <div header_area>
                     <label className='button_margin'>入力した正解値</label>
                     <button className='button_margin' onClick={() => reset(props.themeDetail)}>リセット</button>

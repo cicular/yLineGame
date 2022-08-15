@@ -246,9 +246,9 @@ const Play = () => {
   // },[]);
 
   useEffect(()=> {
+    console.log("プレイ画面での取得開始 useEffectの実行");
     // const data = getThemeDetail(themeId);
     let url = `http://127.0.0.1:8000/y_line_game_app/themeDetail/${themeId}`;
-    console.log("useEffectの実行");
     axios.get(url).then((response) => {
       setThemeDetail(response.data);
       if(response.data.entered_contents != null){
@@ -296,7 +296,7 @@ const Play = () => {
           </tbody>
         </table>
 
-        <EnteredValueTable value={entered_value_array} themeDetail={themeDetail} />
+        <EnteredValueTable value={entered_value_array} themeDetail={themeDetail} user_id={location.state.user_id}/>
         {/* これだとpropsを渡してもundefinedになってしまう */}
         {/* <EnteredValueTable value={themeDetail.entered_contents} /> */}
 

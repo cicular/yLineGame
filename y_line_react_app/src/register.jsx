@@ -103,7 +103,7 @@ const Register = () => {
   return (
     <div className="App">
     <Header type="2" user_id={location.state.user_id}/>
-    <Modal show={show} setShow={setShow} modal_msg={modal_msg}/>
+    <Modal show={show} setShow={setShow} modal_msg={modal_msg} user_id={location.state.user_id}/>
     <h3>お題登録</h3>
     <div className="input_area">
         <label>お題のタイトル</label>
