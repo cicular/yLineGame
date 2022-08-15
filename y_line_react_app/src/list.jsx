@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import useSound from 'use-sound';
+import { useLocation } from "react-router-dom";
 
 // コンポーネント
 import Header from "./header";
@@ -11,12 +12,6 @@ import Modal from './Modal';
 // use-sound
 // Relative imports outside of src/ are not supported.
 import select_sound from './select.mp3';
-
-let themes;
-// let url = 'https://jsonplaceholder.typicode.com/posts'
-let url = 'http://127.0.0.1:8000/y_line_game_app/theme/9';
-// let url = 'http://127.0.0.1:8000/y_line_game_app/theme?user_id=9999';
-// let url = 'http://127.0.0.1:8000/y_line_game_app//${themeId}';
 
 // 一覧画面
 const List = () => {
@@ -28,15 +23,20 @@ const List = () => {
 
   // use-sound
   const [play_select, {}] = useSound(select_sound);
-  
+
+  // useLocation
+  const location = useLocation();
+  console.log(location.state.user_id);
+
+  let url = `http://127.0.0.1:8000/y_line_game_app/theme/${location.state.user_id}`;
+  console.log(url);
+
   // 削除ボタン押下時
   const deleteTheme = (tid, title) => {
     // ★★★バッククウォーテーション　最後にバックスラッシュ
     let delete_url = `http://127.0.0.1:8000/y_line_game_app/theme2222/${tid}/`;
     // 音声再生
     play_select();
-
-    // console.log(delete_url);
 
     // レコード物理削除
     axios.delete(delete_url)
@@ -53,31 +53,15 @@ const List = () => {
     axios.get(url).then((response) => {
       setThemes(response.data);
       // console.log(response.data);
-      // console.log(response.data.length);
     })
     .catch(error => {
       console.log(error);
     });
   }, []);
-  // setThemeId(themes.themeId);
-
-  // useEffect(() => {
-  //   const getEachTheme = (themeId) => {
-  //     alert(themeId);
-  //     axios.get(url,{
-  //       params:{
-  //         theme_id: themeId
-  //       }
-  //     }).then((response) => {
-  //       setThemes(response.data);
-  //       console.log(response.data)
-  //     });
-  //   }    
-  // }, []);
 
     return (
       <div className="App">
-      <Header type="1" />
+      <Header type="1" user_id={location.state.user_id}/>
       <h3>お題一覧</h3>
       <Modal show={show} setShow={setShow} modal_msg={modal_msg}/>
 
@@ -90,10 +74,10 @@ const List = () => {
           { themes.map((theme) =>
           <tr className='list'>
             <td key={theme.theme_id}>{theme.theme_title}</td>
-            <td><Link to={`/play/${theme.theme_id}`}><button onClick={() => play_select()}>Play</button></Link></td>
+            <td><Link to={`/play/${theme.theme_id}`} state={{user_id: location.state.user_id}}><button onClick={() => play_select()}>Play</button></Link></td>
             <td>項目数：{theme.num_of_contents}</td>
             <td>最高記録：{theme.best_record}</td>
-            <td><Link to={`/edit/${theme.theme_id}`}><button onClick={() => play_select()}>編集</button></Link></td>
+            <td><Link to={`/edit/${theme.theme_id}`} state={{user_id: location.state.user_id}}><button onClick={() => play_select()}>編集</button></Link></td>
             <td><button onClick={() => deleteTheme(theme.theme_id, theme.theme_title)}>削除</button></td>
           </tr>)}
           </tbody>

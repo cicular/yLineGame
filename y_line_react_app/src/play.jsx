@@ -2,6 +2,7 @@ import { useParams } from 'react-router-dom';
 import React, {useState, useEffect} from 'react';
 import useSound from 'use-sound';
 import axios from 'axios';
+import { useLocation } from "react-router-dom";
 
 // コンポーネント
 import Header from "./header";
@@ -41,6 +42,10 @@ const Play = () => {
   const [play_clear, {}] = useSound(clear_sound);
   const [play_game_over, {}] = useSound(game_over_sound);
 
+  // useLocation
+  const location = useLocation();
+  console.log(location.state.user_id);
+  
   // Goボタン押下時の処理
   const updateTheme = (tid, iv) => {
     console.log("Goボタンを押した。");
@@ -248,6 +253,7 @@ const Play = () => {
     // const data = getThemeDetail(themeId);
     let url = `http://127.0.0.1:8000/y_line_game_app/themeDetail/${themeId}`;
     // console.log(url);
+    console.log("useEffectの実行");
     axios.get(url).then((response) => {
       // console.log(response.data);
       setThemeDetail(response.data);
@@ -263,7 +269,7 @@ const Play = () => {
       <div className="App">
         <Modal show={show} setShow={setShow} modal_msg={modal_msg}/>
         <Modal2 show={show2} setShow={setShow2} modal_msg={modal_msg2}/>
-        <Header type="4"/>
+        <Header type="4" user_id={location.state.user_id}/>
         <h3>{themeDetail.theme_title}</h3>
         <div>
             <input type="text" placeholder="" value={ input_value } onChange={(event) => setInputValue(event.target.value)}/>

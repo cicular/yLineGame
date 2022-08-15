@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, {useState} from 'react';
 import useSound from 'use-sound';
+import { useLocation } from "react-router-dom";
 
 // コンポーネント
 import Header from "./header";
@@ -47,6 +48,10 @@ const Register = () => {
   // use-sound
   const [play_select, {}] = useSound(select_sound);
   const [play_already_entered, {}] = useSound(already_entered_sound);
+  
+  // useLocation
+  const location = useLocation();
+  console.log(location.state.user_id);
 
   // 登録ボタン押下時
   const createNewTheme = () => {
@@ -107,7 +112,7 @@ const Register = () => {
 
   return (
     <div className="App">
-    <Header type="2"/>
+    <Header type="2" user_id={location.state.user_id}/>
     <Modal show={show} setShow={setShow} modal_msg={modal_msg}/>
     <h3>お題登録</h3>
     <div className="input_area">

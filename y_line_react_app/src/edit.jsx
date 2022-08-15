@@ -3,6 +3,7 @@ import axios from 'axios';
 import React, {useState, useEffect} from 'react';
 import { useParams } from 'react-router-dom';
 import useSound from 'use-sound';
+import { useLocation } from "react-router-dom";
 
 // コンポーネントインポート
 import Header from "./header";
@@ -32,6 +33,10 @@ const Edit = () => {
   const [play_cancel, {}] = useSound(cancel_sound);
   const [play_already_entered, {}] = useSound(already_entered_sound);
 
+  // useLocation
+  const location = useLocation();
+  console.log(location.state.user_id);
+  
   useEffect(()=> {
     let get_url = `http://127.0.0.1:8000/y_line_game_app/themeDetail/${themeId}`;
     console.log(get_url);
@@ -103,7 +108,7 @@ const Edit = () => {
 
   return (
     <div className="App">
-    <Header type="3"/>
+    <Header type="3" user_id={location.state.user_id}/>
     <Modal show={show} setShow={setShow} modal_msg={modal_msg}/>
     <h3>お題編集</h3>
     <div className="input_area">
@@ -122,7 +127,7 @@ const Edit = () => {
         
         <div>
           <button className='button_margin' onClick={updateTheme}>更新</button>
-          <Link to="/list"><button className='button_margin' onClick={() => play_cancel()}>戻る</button></Link>
+          <Link to="/list" state={{user_id: location.state.user_id}}><button className='button_margin' onClick={() => play_cancel()}>戻る</button></Link>
         </div>
     </div>
     <Footer />
