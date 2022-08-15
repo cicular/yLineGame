@@ -48,7 +48,7 @@ class Theme(models.Model):
 
 class User(models.Model):
     # 一意に割り振られるID
-    user_id = models.AutoField(primary_key=True)
+    user_id = models.CharField(primary_key=True, max_length=20)
     # パスワード
     password = models.CharField(max_length=20)
     # ログインフラグ
