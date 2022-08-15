@@ -13,27 +13,7 @@ import Modal from './Modal';
 import select_sound from './select.mp3';
 import already_entered_sound from './already_entered.mp3';
 
-
-// axios.post('http://127.0.0.1:8000/listapp/needtobuy/', 登録データ, {
-// headers: {'Content-Type' : 'application:json'}
-// })
-// .then(res => console.log(res.data))
-
-// const createNewUser = () => {
-//   const [users, setUsers] = useState([]);
-
-//   axios.post('https://jsonplaceholder.typicode.com/users', {
-//     firstName: 'Fred',
-//     lastName: 'Flintstone'
-//   })
-//   .then(response => {
-//     setUsers([...users, response.data])
-//   })
-//   .catch(error => {
-//     console.log(error);
-//   });
-// }
-
+// 登録画面
 const Register = () => {
   let post_url = 'http://127.0.0.1:8000/y_line_game_app/theme2222/';
 
@@ -75,11 +55,12 @@ const Register = () => {
     const contents_array = themeContents.split(",");
     const numOfContents = contents_array.length;
 
+    // 新規追加のリクエスト
     axios.post(post_url, {
       theme_title: themeTitle,
       theme_contents: themeContents,
       entered_contents: null,
-      user_id: 1,
+      user_id: location.state.user_id,
       num_of_plays: 0,
       num_of_contents: numOfContents,
       num_of_remaining_contents: numOfContents,

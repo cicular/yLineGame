@@ -77,7 +77,7 @@ const Edit = () => {
     const numOfContents = contents_array.length;
 
     let update_data = {
-        user_id: 9,
+        user_id: location.state.user_id,
         theme_title: themeTitle,
         theme_contents: themeContents,
         num_of_contents: numOfContents,

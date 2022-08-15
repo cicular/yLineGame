@@ -212,7 +212,7 @@ const Play = () => {
   
       let update_data = {
         entered_contents: entered_contents,
-        user_id:9,
+        user_id: location.state.user_id,
         theme_title: themeDetail.theme_title,
         theme_contents: themeDetail.theme_contents,
         num_of_contents: themeDetail.num_of_contents,
