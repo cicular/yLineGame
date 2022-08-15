@@ -57,7 +57,7 @@ const Header = (props) => {
     return (
       <div className={'App header_area'}>
         <header className='button_margin'>山手線ゲーム</header>
-        <Link to="/register" state={{user_id: props.user_id}}><button className='button_margin'>お題登録</button></Link>
+        <Link to="/register" state={{user_id: props.user_id}}><button className='button_margin' onClick={() => play_select()}>お題登録</button></Link>
         <button className='button_margin' onClick={() => logout()}>ログアウト</button>
       </div>
     );
@@ -68,7 +68,7 @@ const Header = (props) => {
     return (
       <div className={'App header_area'}>
         <header className='button_margin'>山手線ゲーム</header>
-        <Link to="/list" state={{user_id: props.user_id}}><button className='button_margin'>お題一覧</button></Link>
+        <Link to="/list" state={{user_id: props.user_id}}><button className='button_margin' onClick={() => play_select()}>お題一覧</button></Link>
         <button className='button_margin' onClick={() => logout()}>ログアウト</button>
       </div>
     );
@@ -89,8 +89,8 @@ const Header = (props) => {
     return (
       <div className={'App header_area'}>
         <header className='button_margin'>山手線ゲーム</header>
-        <Link to="/list" state={{user_id: props.user_id}}><button className='button_margin'>お題一覧</button></Link>
-        <Link to="/register" state={{user_id: props.user_id}}><button className='button_margin'>お題登録</button></Link>
+        <Link to="/list" state={{user_id: props.user_id}}><button className='button_margin' onClick={() => play_select()}>お題一覧</button></Link>
+        <Link to="/register" state={{user_id: props.user_id}}><button className='button_margin' onClick={() => play_select()}>お題登録</button></Link>
         <button className='button_margin' onClick={() => logout()}>ログアウト</button>
       </div>
     );
@@ -101,7 +101,7 @@ const Header = (props) => {
     return (
       <div className={'App header_area'}>
         <header className='button_margin'>山手線ゲーム</header>
-        <Link to="/login"><button className='button_margin'>ログイン画面へ</button></Link>
+        <Link to="/login"><button className='button_margin' onClick={() => play_select()}>ログイン画面へ</button></Link>
       </div>
     );
   }
