@@ -1,7 +1,12 @@
 import React, {useState} from 'react';
 // https://zenn.dev/horisan/articles/2aeaf0bd3fb70f v6でhistoryからnavigateに変更になった。
 import { useNavigate } from 'react-router-dom';
+import useSound from 'use-sound';
 import axios from 'axios';
+
+// use-sound
+import select_sound from './select.mp3';
+import already_entered_sound from './already_entered.mp3';
 
 // コンポーネントインポート
 import Header from "./header";
@@ -21,9 +26,13 @@ const Login = () => {
     const [show, setShow] = useState(false);
     const [modal_msg, setMsg] = useState("b");
 
+    // use-sound
+    const [play_select, {}] = useSound(select_sound);
+    const [play_already_entered, {}] = useSound(already_entered_sound);
+
     const handleChangeUserId = (e) => {
         setUserId(e.target.value);
-      }
+    }
     
     const handleChangePassword = (e) => {
         setPassword(e.target.value);
@@ -32,17 +41,20 @@ const Login = () => {
     // 入力チェック
     const checkInput = () => {
         if(userId === "" && password === ""){
+            play_already_entered();
             setShow(true);
             setMsg("ユーザ名とパスワードを入力してください。");
             return false;
         }
 
         if(userId === ""){
+            play_already_entered();
             setShow(true);
             setMsg("ユーザ名を入力してください。");
             return false;
         }
         if(password === ""){
+            play_already_entered();
             setShow(true);
             setMsg("パスワードを入力してください。");
             return false;
@@ -83,24 +95,28 @@ const Login = () => {
             setUserInfo(response.data);
             if(response.data.password === password){
                 if(update_user_table(user_get_url, password)){
+                    play_select();
                     console.log(password);
                     console.log(userInfo.password); /* これはundefinedになることがある。*/
                     navigate('/list');
                 }else{
+                    play_already_entered();
                     setShow(true);
                     setMsg("データベース接続に失敗しました。");
                     setPassword("");
                 }
             }else{
+                play_already_entered();
                 setShow(true);
-                setMsg("ユーザ名かパスワードが誤っています。2");
+                setMsg("ユーザ名かパスワードが誤っています。");
                 setPassword("");
             }    
           })
           .catch(error => {
+            play_already_entered();
             console.log(error);
             setShow(true);
-            setMsg("ユーザ名かパスワードが誤っています。1");
+            setMsg("ユーザ名かパスワードが誤っています。");
             setPassword("");
             return;
           });
