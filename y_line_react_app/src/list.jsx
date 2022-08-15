@@ -8,6 +8,7 @@ import { useLocation } from "react-router-dom";
 import Header from "./header";
 import Footer from "./footer";
 import Modal from './Modal';
+import NotFoundPage  from './NotFound';
 
 // use-sound
 // Relative imports outside of src/ are not supported.
@@ -26,10 +27,6 @@ const List = () => {
 
   // useLocation
   const location = useLocation();
-  console.log(location.state.user_id);
-
-  let url = `http://127.0.0.1:8000/y_line_game_app/theme/${location.state.user_id}`;
-  console.log(url);
 
   // 削除ボタン押下時
   const deleteTheme = (tid, title) => {
@@ -50,15 +47,24 @@ const List = () => {
   }
 
   useEffect(() => {
-    axios.get(url).then((response) => {
-      setThemes(response.data);
-      // console.log(response.data);
-    })
-    .catch(error => {
-      console.log(error);
-    });
+    if (location.state != null){
+      let get_url = `http://127.0.0.1:8000/y_line_game_app/theme/${location.state.user_id}`;
+      axios.get(get_url).then((response) => {
+        setThemes(response.data);
+        // console.log(response.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });  
+    }
   }, []);
 
+  // ユーザ情報がない場合
+  if(location.state === null){
+    return(
+      <NotFoundPage />
+    )
+  }
     return (
       <div className="App">
       <Header type="1" user_id={location.state.user_id}/>

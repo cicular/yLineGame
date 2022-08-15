@@ -7,6 +7,7 @@ import { useLocation } from "react-router-dom";
 import Header from "./header";
 import Footer from "./footer";
 import Modal from './Modal';
+import NotFoundPage  from './NotFound';
 
 // use-sound
 // Relative imports outside of src/ are not supported.
@@ -31,7 +32,6 @@ const Register = () => {
   
   // useLocation
   const location = useLocation();
-  console.log(location.state.user_id);
 
   // 登録ボタン押下時
   const createNewTheme = () => {
@@ -55,32 +55,34 @@ const Register = () => {
     const contents_array = themeContents.split(",");
     const numOfContents = contents_array.length;
 
-    // 新規追加のリクエスト
-    axios.post(post_url, {
-      theme_title: themeTitle,
-      theme_contents: themeContents,
-      entered_contents: null,
-      user_id: location.state.user_id,
-      num_of_plays: 0,
-      num_of_contents: numOfContents,
-      num_of_remaining_contents: numOfContents,
-      public_flg: '1',
-      delete_flg: '0',
-    })
-    .then(response => {
-      setTheme(response.data);
-      // 音声再生
-      play_select();
-      // モーダル表示
-      setShow(true);
-      setMsg("登録しました！");
-      // テキストボックスを初期化
-      setThemeTitle("");
-      setThemeContents("");
-    })
-    .catch(error => {
-      console.log(error);
-    });
+    if (location.state != null){
+      // 新規追加のリクエスト
+      axios.post(post_url, {
+        theme_title: themeTitle,
+        theme_contents: themeContents,
+        entered_contents: null,
+        user_id: location.state.user_id,
+        num_of_plays: 0,
+        num_of_contents: numOfContents,
+        num_of_remaining_contents: numOfContents,
+        public_flg: '1',
+        delete_flg: '0',
+      })
+      .then(response => {
+        setTheme(response.data);
+        // 音声再生
+        play_select();
+        // モーダル表示
+        setShow(true);
+        setMsg("登録しました！");
+        // テキストボックスを初期化
+        setThemeTitle("");
+        setThemeContents("");
+      })
+      .catch(error => {
+        console.log(error);
+      });
+    }
   }
 
   const handleChangeTitle = (e) => {
@@ -91,6 +93,13 @@ const Register = () => {
     setThemeContents(e.target.value)
   }
 
+  // ユーザ情報がない場合
+  if(location.state === null){
+    return(
+      <NotFoundPage />
+    )
+  }
+  
   return (
     <div className="App">
     <Header type="2" user_id={location.state.user_id}/>
