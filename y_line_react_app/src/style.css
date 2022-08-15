@@ -17,7 +17,7 @@
 button{
     border-radius: 8px;
     /* 枠線を消す */
-      border: none;
+    border: none;
     /* 上下4px、左右16px */
     padding: 4px 16px;
 }
@@ -98,7 +98,7 @@ td {
 
 .color_blue{
     /* 背景色指定 */
-    background-color: #b4daf8;
+    background-color: #aee6f5;
 }
 
 .user_id_label {

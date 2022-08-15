@@ -1,3 +1,4 @@
+// モーダル
 const Modal = ({show, setShow, modal_msg}) => {
     if (show) {
         return (

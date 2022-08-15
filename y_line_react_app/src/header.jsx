@@ -1,8 +1,7 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import useSound from 'use-sound';
-import { useNavigate } from 'react-router-dom';
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import select_sound from './select.mp3';
 
@@ -56,8 +55,8 @@ const Header = (props) => {
     );
   }
 
-  // 登録画面
-  if(props.type==="2"){
+  // 登録画面、編集画面
+  if(props.type==="2" || props.type==="3"){
     return (
       <div className={'App header_area'}>
         <header className='button_margin'>山手線ゲーム</header>
@@ -69,15 +68,15 @@ const Header = (props) => {
   }
 
   // 編集画面
-  if(props.type==="3"){
-    return (
-      <div className={'App header_area'}>
-        <header className='button_margin'>山手線ゲーム</header>
-        <button className='button_margin' onClick={() => logout()}>ログアウト</button>
-        <label className='user_id_label'>ログイン中：{props.user_id}さん</label>
-      </div>
-    );
-  }
+  // if(props.type==="3"){
+  //   return (
+  //     <div className={'App header_area'}>
+  //       <header className='button_margin'>山手線ゲーム</header>
+  //       <button className='button_margin' onClick={() => logout()}>ログアウト</button>
+  //       <label className='user_id_label'>ログイン中：{props.user_id}さん</label>
+  //     </div>
+  //   );
+  // }
 
   // プレイ画面
   if(props.type==="4"){

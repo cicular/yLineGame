@@ -32,8 +32,6 @@ const EnteredValueTable = (props) => {
         }
     }
 
-    // console.log(entered_value_array_parent);
-
     // リセットボタン押下時
     const reset = (tDetail) => {
         let update_best_record = 0;
@@ -69,7 +67,7 @@ const EnteredValueTable = (props) => {
             // モーダル表示
             setShow(true);
             setMsg("入力値をリセットしました！");            
-            console.log("テーブルを更新した2。")
+            console.log("リセット処理：Themeテーブルを更新しました。");
           })
           .catch(error => {
             console.log(error);
@@ -80,8 +78,10 @@ const EnteredValueTable = (props) => {
         return (
             <div>
                 <Modal show={show} setShow={setShow} modal_msg={modal_msg}/>
-                <div>入力した正解値</div>
-                <button onClick={() => reset(props.themeDetail)}>リセット</button>
+                <div header_area>
+                    <label className='button_margin'>入力した正解値</label>
+                    <button className='button_margin' onClick={() => reset(props.themeDetail)}>リセット</button>
+                </div>
                 <table className={'centering_item color_blue'} border="1">
                     <thead></thead>
                     <tbody>

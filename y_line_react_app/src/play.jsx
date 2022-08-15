@@ -1,8 +1,7 @@
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
 import React, {useState, useEffect} from 'react';
 import useSound from 'use-sound';
 import axios from 'axios';
-import { useLocation } from "react-router-dom";
 
 // コンポーネント
 import Header from "./header";
@@ -44,7 +43,6 @@ const Play = () => {
 
   // useLocation
   const location = useLocation();
-  console.log(location.state.user_id);
   
   // Goボタン押下時の処理
   const updateTheme = (tid, iv) => {
@@ -54,9 +52,8 @@ const Play = () => {
 
     // 照合のためのデータ取得
     axios.get(get_url).then((response) => {
-      // console.log(response.data);
       setThemeDetail(response.data);
-      console.log("テーブルからデータを取得した。");
+      console.log("プレイ画面：Themeテーブルからデータを取得しました。");
     })
     .catch(error => {
       console.log(error);
@@ -81,7 +78,6 @@ const Play = () => {
     let best_record = 0;
 
     let entered_contents_array = [];
-    console.log(entered_contents_array.length);
     if(themeDetail.entered_contents != null){
       entered_contents_array = themeDetail.entered_contents.split(",");
     }
@@ -252,10 +248,8 @@ const Play = () => {
   useEffect(()=> {
     // const data = getThemeDetail(themeId);
     let url = `http://127.0.0.1:8000/y_line_game_app/themeDetail/${themeId}`;
-    // console.log(url);
     console.log("useEffectの実行");
     axios.get(url).then((response) => {
-      // console.log(response.data);
       setThemeDetail(response.data);
       if(response.data.entered_contents != null){
         setEnteredValueArray(response.data.entered_contents.split(","));

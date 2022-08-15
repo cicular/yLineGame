@@ -1,9 +1,8 @@
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import React, {useState, useEffect} from 'react';
-import { useParams } from 'react-router-dom';
 import useSound from 'use-sound';
-import { useLocation } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 
 // コンポーネントインポート
 import Header from "./header";
@@ -35,11 +34,9 @@ const Edit = () => {
 
   // useLocation
   const location = useLocation();
-  console.log(location.state.user_id);
   
   useEffect(()=> {
     let get_url = `http://127.0.0.1:8000/y_line_game_app/themeDetail/${themeId}`;
-    console.log(get_url);
     axios.get(get_url).then((response) => {
       console.log(response.data);
       setThemeDetail(response.data);

@@ -1,8 +1,7 @@
 import React, {useState, useEffect} from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import useSound from 'use-sound';
-import { useLocation } from "react-router-dom";
 
 // コンポーネント
 import Header from "./header";
