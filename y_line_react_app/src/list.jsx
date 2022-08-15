@@ -46,18 +46,16 @@ const List = () => {
     });
   }
 
-  useEffect(() => {
-    if (location.state != null){
-      let get_url = `http://127.0.0.1:8000/y_line_game_app/theme/${location.state.user_id}`;
-      axios.get(get_url).then((response) => {
-        setThemes(response.data);
-        // console.log(response.data);
-      })
-      .catch(error => {
-        console.log(error);
-      });  
-    }
-  }, []);
+  if (location.state != null){
+    let get_url = `http://127.0.0.1:8000/y_line_game_app/theme/${location.state.user_id}`;
+    axios.get(get_url).then((response) => {
+      setThemes(response.data);
+      // console.log(response.data);
+    })
+    .catch(error => {
+      console.log(error);
+    });  
+  }
 
   // ユーザ情報がない場合
   if(location.state === null){
