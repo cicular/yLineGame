@@ -127,7 +127,7 @@ class UserAPIView(views.APIView):
             serializer.save(user_id=pk)
             # レスポンスオブジェクトを返す
             print("ユーザテーブルを更新しました。")
-            return JsonResponse(serializer.data)
+            return JsonResponse(serializer.data, safe=False)
         else:
             print("valid失敗")
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
