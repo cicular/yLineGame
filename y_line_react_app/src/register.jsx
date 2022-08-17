@@ -65,6 +65,7 @@ const Register = () => {
         num_of_plays: 0,
         num_of_contents: numOfContents,
         num_of_remaining_contents: numOfContents,
+        num_of_clear: 0,
         public_flg: '1',
         delete_flg: '0',
       })

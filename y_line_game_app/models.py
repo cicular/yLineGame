@@ -40,6 +40,8 @@ class Theme(models.Model):
     num_of_contents = models.IntegerField()
     # 最高記録
     best_record = models.IntegerField(null=True, default=0)
+    # クリア回数
+    num_of_clear = models.IntegerField(null=True, default=0)
     # 公開フラグ
     public_flg = models.CharField(max_length=1, default=0)
     # 削除フラグ

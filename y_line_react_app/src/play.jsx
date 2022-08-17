@@ -76,6 +76,8 @@ const Play = () => {
     let num_of_remaining_contents = themeDetail.num_of_remaining_contents;
     // 最高記録
     let best_record = 0;
+    // クリア回数
+    let num_of_clear = 0;
 
     let entered_contents_array = [];
     if(themeDetail.entered_contents != null){
@@ -163,11 +165,14 @@ const Play = () => {
       }
 
       if (num_of_remaining_contents === 0){
+        num_of_clear = themeDetail.num_of_clear + 1;
         // 音声再生
         play_clear();
         // モーダル表示
         setShow(true);
         setMsg("クリア！！すべて回答しました！！");
+      }else{
+        num_of_clear = themeDetail.num_of_clear;
       }
   
       // すべて入力した場合もしくはゲームオーバー時
@@ -216,6 +221,7 @@ const Play = () => {
         num_of_entered_contents: num_of_correct,
         num_of_incorrect: num_of_incorrect,
         best_record: best_record,
+        num_of_clear: num_of_clear,
       }
   
       axios.put(update_url, update_data)

@@ -51,7 +51,7 @@ const List = () => {
       let get_url = `http://127.0.0.1:8000/y_line_game_app/theme/${location.state.user_id}`;
       axios.get(get_url).then((response) => {
         setThemes(response.data);
-        // console.log(response.data);
+        console.log(response.data);
       })
       .catch(error => {
         console.log(error);
@@ -83,6 +83,7 @@ const List = () => {
             <td><Link to={`/play/${theme.theme_id}`} state={{user_id: location.state.user_id}}><button onClick={() => play_select()}>Play</button></Link></td>
             <td>項目数：{theme.num_of_contents}</td>
             <td>最高記録：{theme.best_record}</td>
+            <td>クリア回数：{theme.num_of_clear}</td>
             <td><Link to={`/edit/${theme.theme_id}`} state={{user_id: location.state.user_id}}><button onClick={() => play_select()}>編集</button></Link></td>
             <td><button onClick={() => deleteTheme(theme.theme_id, theme.theme_title)}>削除</button></td>
           </tr>)}
